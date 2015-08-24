@@ -632,6 +632,58 @@ component extends="FW1.framework" {
 	}
 	
 	public void function setupView() {
+		Restrictions = new model.transient.collection.CriteriaBuilderRestrictions().init();
+        Subqueries = new model.transient.collection.CriteriaBuilderSubqueries().init();
+        Projections = new model.transient.collection.CriteriaBuilderProjections().init();
+        Transformers = new model.transient.collection.CriteriaBuilderTransformers().init();
+        Order = new model.transient.collection.CriteriaBuilderOrder().init();
+        //writedump(Projections);
+        //writeDump(Transformers);
+        //writeDump(Restrictions);
+        //writeDump(Subqueries);
+        //writeDump(Order);abort;
+        
+        /**GETS max 10 records from Account where firstName equals Ian */
+        //criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
+        //writeDump(criteria);
+        //criteria.add( Restrictions._eq("firstName", "Ian") );
+        //var result = criteria.list();        
+        //writeDump(var=result, top=3);
+		
+		/** only returns two specific columns from the query */
+		/*criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
+        var result = criteria.setProjection(Projections.projectionList()
+        .add( Projections.property("accountID"), "accountID")
+        .add( Projections.property("firstName"), "firstName"))
+        .setFirstResult(0)
+        .setMaxResults(10)
+        .list();
+        writeDump(var=result);*/
+		
+		/** returns id, first, last from Slatwall account where name (case insensitive) like bob */
+		/*criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
+		
+		var result = criteria.setProjection(Projections.projectionList()
+        .add(Projections.property("accountID"), "accountID")
+        .add(Projections.property("firstName"), "firstName")
+        .add(Projections.property("lastName"), "lastName"))
+        .add(Restrictions._ilike("this.firstName", "bob")).list();
+		writeDump(result);*/
+		
+		/*
+		criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
+        
+        var result = criteria.setProjection(Projections.projectionList()
+        .add(Projections.property("accountID"), "accountID")
+        .add(Projections.property("firstName"), "firstName")
+        .add(Projections.property("lastName"), "lastName"))
+        .add(Restrictions._ilike("this.firstName", "bob"))
+        .list();
+        writeDump(result);
+		*/
+		
+		
+		
 		param name="request.context.ajaxRequest" default="false";
 		
 		if(request.context.ajaxRequest) {
