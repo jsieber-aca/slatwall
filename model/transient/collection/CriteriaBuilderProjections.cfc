@@ -2,8 +2,8 @@
     more specifically, projections allow you to define columns that you want fetched in the query       */
 component  output="true" accessors="true" displayname="CriteriaBuilderProjections" hint="This is a wrapper for the hibernate criteria builder" persistent="false"  
 {
-	property name="errors" type="array";
-	property name="projections" type="any";
+	property array errors;
+	property any projections;
 	
 	public CriteriaBuilderProjections function init(){
 		//Gets a list of all restrictions methods from hibernate

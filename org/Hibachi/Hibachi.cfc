@@ -632,21 +632,17 @@ component extends="FW1.framework" {
 	}
 	
 	public void function setupView() {
-		Restrictions = new model.transient.collection.CriteriaBuilderRestrictions().init();
-        Subqueries = new model.transient.collection.CriteriaBuilderSubqueries().init();
-        Projections = new model.transient.collection.CriteriaBuilderProjections().init();
-        Transformers = new model.transient.collection.CriteriaBuilderTransformers().init();
-        Order = new model.transient.collection.CriteriaBuilderOrder().init();
-        //writedump(Projections);
-        //writeDump(Transformers);
-        //writeDump(Restrictions);
-        //writeDump(Subqueries);
-        //writeDump(Order);abort;
+		Restrictions = new model.transient.collection.CriteriaBuilderRestrictions().init();     //these are aggragates
+        //Subqueries = new model.transient.collection.CriteriaBuilderSubqueries().init();       //these are subqueries executes in a different context
+        Projections = new model.transient.collection.CriteriaBuilderProjections().init();       //these are selections
+        //Transformers = new model.transient.collection.CriteriaBuilderTransformers().init();   //these transform the result
+        //Order = new model.transient.collection.CriteriaBuilderOrder().init();                 //This is the Order by
         
         /**GETS max 10 records from Account where firstName equals Ian */
         //criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
         //writeDump(criteria);
-        //criteria.add( Restrictions._eq("firstName", "Ian") );
+        //criteria.add( Restrictions._eq("firstName", "Ian") )
+        //.setMaxResults(10);
         //var result = criteria.list();        
         //writeDump(var=result, top=3);
 		
@@ -654,24 +650,49 @@ component extends="FW1.framework" {
 		/*criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
         var result = criteria.setProjection(Projections.projectionList()
         .add( Projections.property("accountID"), "accountID")
-        .add( Projections.property("firstName"), "firstName"))
+        .add( Projections.property("firstName"), "firstName")
+        .add( Projections.property("lastName"), "lastName"))
         .setFirstResult(0)
         .setMaxResults(10)
         .list();
         writeDump(var=result);*/
 		
 		/** returns id, first, last from Slatwall account where name (case insensitive) like bob */
+		/*criteria = new model.transient.collection.CriteriaBuilder('SlatwallOrder');
+		criteria.setProjection(Projections.projectionList()
+            .add(Projections.property("orderID"), "orderID")
+            .add(Projections.property("orderNumber"), "orderNumber"))
+            .add(Restrictions._ne("this.orderNumber", ""));
+		  writeDump(criteria.list());*/
+
+		/** Access many-to-one data (account) on the order entity */
+		writeDump("Select orderNumber, account.accountID, account.firstName, account.lastName from SlatwallOrder WHERE account.firstName = 'Ian'");
+		c = new model.transient.collection.CriteriaBuilder("SlatwallOrder")
+    		.createAlias("account", "a")                                      //<--using an alias to access the many-to-one data with.
+    		.add(Restrictions._eq("a.firstName", "Ian"))                      //<--adding a restriction the the account firstName must equal Ian                                                 
+    		.setProjection(Projections.projectionList()                       //<--set the columns that we want returned.[^^^^]
+            .add(Projections.property("orderNumber"), "orderNumber")
+            .add(Projections.property("a.accountID"), "accountID"  )
+            .add(Projections.property("a.firstName"), "firstName"  )
+            .add(Projections.property("a.lastName") , "lastName"  ))
+            .setMaxResults(10);
+        
+		writeDump(var=c.list());
+		//tickCount = getTickCount();
+		/** Access one-to-many data (orderItems) on SlatwallOrders */
+		c = new model.transient.collection.CriteriaBuilder("SlatwallOrder")
+            .createAlias("orderItems", "oi")                                      //<--using an alias to access the many-to-one data with.
+            .add(Restrictions._like("oi.orderItemID", "40%"))                          //<--adding a restriction the the account firstName must equal Ian                                                 
+            .setProjection(Projections.projectionList()                           //<--set the columns that we want returned.[^^^^]
+            .add(Projections.property("oi.orderItemID"), "orderItemID")
+            .add(Projections.property("oi.price"), "price")
+            .add(Projections.property("oi.skuPrice"), "skuPrice")
+            .add(Projections.property("oi.quantity"), "q"));
+        
+        writeDump(var=c.list());
+        //writeDump("Seconds: " & (getTickCount() - tickCount) * .001);
+		/** get three columns in Account where the name is like bob (case insensitive) */
 		/*criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
-		
-		var result = criteria.setProjection(Projections.projectionList()
-        .add(Projections.property("accountID"), "accountID")
-        .add(Projections.property("firstName"), "firstName")
-        .add(Projections.property("lastName"), "lastName"))
-        .add(Restrictions._ilike("this.firstName", "bob")).list();
-		writeDump(result);*/
-		
-		/*
-		criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
         
         var result = criteria.setProjection(Projections.projectionList()
         .add(Projections.property("accountID"), "accountID")
@@ -679,8 +700,8 @@ component extends="FW1.framework" {
         .add(Projections.property("lastName"), "lastName"))
         .add(Restrictions._ilike("this.firstName", "bob"))
         .list();
-        writeDump(result);
-		*/
+        writeDump(result);*/
+		
 		
 		
 		

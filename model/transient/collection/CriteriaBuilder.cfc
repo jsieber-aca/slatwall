@@ -1,14 +1,21 @@
+/** 
+This is the main entry into the criteria builder classes until the SmartCollection is completed.            
+The starting point should always be instantiating the CriteriaBuilder and passing in the primary entity that
+is being quaried.
+ **/
 component  displayname="CriteriaBuilder" hint="The criteria builder" accessors="true" 
 {
-	property name="criteria" type="any";
+	property any criteria;
 	    
-	public CriteriaBuilder function init(required any entityName){
-        //returns the hibernate session form the session factory.
-        if (isNull(arguments.entityName)){
-        	throw("You must supply an string based entityName when instantiating this object.");
-        }
-        try{
-          criteria = ormGetSessionFactory().openSession().createCriteria(arguments.entityName);
+	public CriteriaBuilder function init(any entityName){
+		try{
+            //returns the hibernate session form the session factory.
+            if (isNull(arguments.entityName)){
+            	criteria = ormGetSessionFactory().openSession();//<--this means they are calling createCriteria manually later.
+            	//throw("You must supply an string based entityName when instantiating this object.");
+            }else{
+                criteria = ormGetSessionFactory().openSession().createCriteria(arguments.entityName);
+            }
         }catch(any e){
             errors[1] = e;
         }

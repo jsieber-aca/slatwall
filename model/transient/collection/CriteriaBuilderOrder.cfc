@@ -1,23 +1,20 @@
 component  displayname="CriteriaBuilderOrder" hint="Allows for orders in the criteria builder query" persistent="false" output="false"  
 {
-    property name="errors" type="array";
-    property name="order" type="any";
+    property array errors;
+    property any order;
+    property boolean ascending;
+    property string propertyName;
     
-    public CriteriaBuilderOrder function init(){
-        //Gets a list of all orderings methods from hibernate and wraps in cf methods.
-        try{
-          order = createObject("java", "org.hibernate.criterion.Order");
-        }catch(any e){
-        	throw(e);
-            errors[1] = e;
-        }
+    public any function init(){
         return this;
     }
-    public any function asc(required any str){
-        return order.asc(attributes.str);
+    public CriteriaBuilderOrder function asc(required any str){
+    	order = createObject("java", "org.hibernate.criterion.Order").init(attributes.str, javaCast("boolean", true));
+        return order;
     }
-    public any function desc(required any str){
-        return order.desc(attributes.str);
+    public CriteriaBuilderOrder function desc(required any str){
+        order = createObject("java", "org.hibernate.criterion.Order").init(attributes.str, javaCast("boolean", false));
+        return order;
     }
     public any function ignoreCase(){
         return order.ignoreCase();
