@@ -6,52 +6,47 @@ component  output="true" accessors="true" displayname="CriteriaBuilderProjection
 	property any projections;
 	
 	public CriteriaBuilderProjections function init(){
-		//Gets a list of all restrictions methods from hibernate
-		try{
-		  projections = createObject("java", "org.hibernate.criterion.Projections");
-		}catch(any e){
-			errors[1] = e;
-		}
+		setProjections(createObject("java", "org.hibernate.criterion.Projections"));
 		return this;
 	}
     public any function alias(any projection, any str){
-    	return projections.alias(attributes.projection, attributes.str);
+    	return getProjections().alias(attributes.projection, attributes.str);
     }
     public any function avg(any str){
-        return projections.avg(attributes.str);
+        return getProjections().avg(attributes.str);
     }
     public any function count(any str){
-        return projections.count(attributes.str);
+        return getProjections().count(attributes.str);
     }
     public any function countDistinct(any str){
-        return projections.countDistinct(attributes.str);
+        return getProjections().countDistinct(attributes.str);
     }
     public any function distinct(any projection){
-        return projections.distinct(attributes.projection);
+        return getProjections().distinct(attributes.projection);
     }
     public any function groupProperty(any str){
-        return projections.groupProperty(attributes.str);
+        return getProjections().groupProperty(attributes.str);
     }
     public any function id(){
-        return projections.id();
+        return getProjections().id();
     }
     public any function max(any str){
-        return projections.max(arguments.str);
+        return getProjections().max(arguments.str);
     }
     public any function projectionList(){
-        return projections.projectionList();
+        return getProjections().projectionList();
     }
     public any function property(any property){
-        return projections.property(arguments.property);
+        return getProjections().property(arguments.property);
     }
     public any function rowCount(){
-        return projections.rowCount();
+        return getProjections().rowCount();
     }
     public any function sqlGroupProjection(any str, any str2, any strArray, any typeArray){
-        return projections.sqlGroupProjection(arguments.str, arguments,str2, arguments.strArray, arguments.typeArray);
+        return getProjections().sqlGroupProjection(arguments.str, arguments,str2, arguments.strArray, arguments.typeArray);
     }
     public any function sum(any str){
-        return projections.sum(arguments.str);
+        return getProjections().sum(arguments.str);
     }
 }
 

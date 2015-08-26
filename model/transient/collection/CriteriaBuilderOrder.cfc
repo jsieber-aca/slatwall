@@ -9,21 +9,21 @@ component  displayname="CriteriaBuilderOrder" hint="Allows for orders in the cri
         return this;
     }
     public CriteriaBuilderOrder function asc(required any str){
-    	order = createObject("java", "org.hibernate.criterion.Order").init(attributes.str, javaCast("boolean", true));
-        return order;
+    	variables.order = createObject("java", "org.hibernate.criterion.Order").init(attributes.str, true);
+        return variables.order;
     }
     public CriteriaBuilderOrder function desc(required any str){
-        order = createObject("java", "org.hibernate.criterion.Order").init(attributes.str, javaCast("boolean", false));
-        return order;
+        variables.order = createObject("java", "org.hibernate.criterion.Order").init(attributes.str, false);
+        return variables.order;
     }
     public any function ignoreCase(){
-        return order.ignoreCase();
+        return variables.order.ignoreCase();
     }
     public any function toSqlString(required any criteria, required any criteriaQuery){
-        return order.toSqlString(arguments.criteria, arguments.criteriaQuery);
+        return variables.order.toSqlString(arguments.criteria, arguments.criteriaQuery);
     }
     public any function toString(){
-        return order.toString();
+        return variables.order.toString();
     }
     
 }

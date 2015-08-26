@@ -6,15 +6,11 @@ component  output="true" accessors="true" displayname="CriteriaBuilderTransforme
 	
 	public CriteriaBuilderTransformers function init(){
 		//Gets a list of all restrictions methods from hibernate
-		try{
-		  transformers = createObject("java", "org.hibernate.transform.Transformers");
-		}catch(any e){
-			errors[1] = e;
-		}
+		setTransformers(createObject("java", "org.hibernate.transform.Transformers"));
 		return this;
 	}
 	public any function aliasToBean(any class){
-		return transformers.aliasToBean(arguments.class);
+		return getTransformers().aliasToBean(arguments.class);
 	}
     
 }

@@ -6,22 +6,14 @@ component  output="true" accessors="true" displayname="CriteriaBuilderRestrictio
 	
 	public CriteriaBuilderRestrictions function init(){
 		//Gets a list of all restrictions methods from hibernate
-		try{
-		  restrictions = createObject("java", "org.hibernate.criterion.Restrictions");
-		}catch(any e){
-			errors[1] = e;
-		}
+		setRestrictions(createObject("java", "org.hibernate.criterion.Restrictions"));
 		return this;
 	}
-    public any function _allEq(required any map){
-    	return restrictions.allEq(map);
+    public any function _allEq(required any propertyNameStruct){
+    	return restrictions.allEq(propertyNameStruct);
     }
-    public any function _and(){
-    	var expressions = [];
-        for(var key in arguments){
-            arrayAppend(expressions, arguments[key]);
-        }
-        return this._conjunction(expressions);
+    public any function _and(required any restrictionArray){
+        return this._conjunction(arguments.restrictionArray);
     }
     public any function _between(required any str, required any min, required any max) {
     	return restrictions.between(str, min, max);
@@ -89,12 +81,8 @@ component  output="true" accessors="true" displayname="CriteriaBuilderRestrictio
     public any function _not(required any criterion) {
         return restrictions.not(criterion);
     }
-    public any function _or() {
-        var expressions = [];
-        for(var key in arguments){
-            arrayAppend(expressions, arguments[key]);
-        }
-        return this._disjunction(expressions);
+    public any function _or(required any restrictionArray) {
+       return this._disjunction(restrictionArray);
     }
     public any function _sizeEq(required any str, required any int) {
         return restrictions.sizeEq(str, int);
@@ -117,18 +105,18 @@ component  output="true" accessors="true" displayname="CriteriaBuilderRestrictio
     public any function _sqlRestriction(required any str) {
         return restrictions.sqlRestriction(str);
     }
-    public any function _conjunction(required array restrictionValues) {
-        var conjunction = restrictions.conjunction();
-        for(var i=1; i <= ArrayLen(arguments.restrictionValues); i++){
-            conjunction.add( arguments.restrictionValues[i] );
-        }
-        return conjunction;
+    public any function _conjunction(required any restrictionArray) {
+    	var newConjunction = restrictions.conjunction();
+    	for (restriction in restrictionArray){
+    		newConjunction.add(restriction);
+    	}
+        return newConjunction;
     }
-    public any function _disjunction(required array restrictionValues) {
-        var disjunction = restrictions.disjunction();
-        for(var i=1; i <= ArrayLen(arguments.restrictionValues); i++){
-            disjunction.add( arguments.restrictionValues[i] );
+    public any function _disjunction(required any restrictionArray) {
+        var newDisjunction = restrictions.disjunction();
+        for (restriction in restrictionArray){
+            newDisjunction.add(restriction);
         }
-        return disjunction;
+        return newDisjunction;
     }
 }

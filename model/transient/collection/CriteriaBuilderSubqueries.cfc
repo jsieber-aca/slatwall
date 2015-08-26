@@ -6,11 +6,7 @@ component  output="true" accessors="true" displayname="CriteriaBuilderRestrictio
 	
 	public CriteriaBuilderSubqueries function init(){
 		//Gets a list of all restrictions methods from hibernate
-		try{
-		  subqueries = createObject("java", "org.hibernate.criterion.Subqueries");
-		}catch(any e){
-			errors[1] = e;
-		}
+		setSubqueries(createObject("java", "org.hibernate.criterion.Subqueries"));
 		return this;
 	}
     public any function _eq(required any obj, required any detchedCriteria){

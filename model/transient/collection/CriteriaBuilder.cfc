@@ -6,149 +6,167 @@ is being quaried.
 component  displayname="CriteriaBuilder" hint="The criteria builder" accessors="true" 
 {
 	property any criteria;
-	    
+	property string entityName;
+	property array errors;
+   
 	public CriteriaBuilder function init(any entityName){
 		try{
             //returns the hibernate session form the session factory.
             if (isNull(arguments.entityName)){
-            	criteria = ormGetSessionFactory().openSession();//<--this means they are calling createCriteria manually later.
+            	setCriteria(ormGetSessionFactory().openSession());//<--this means they are calling createCriteria manually later.
             	//throw("You must supply an string based entityName when instantiating this object.");
             }else{
-                criteria = ormGetSessionFactory().openSession().createCriteria(arguments.entityName);
+            	setEntityName(arguments.entityName);
+                setCriteria(ormGetSessionFactory().openSession().createCriteria(getEntityName()));
             }
         }catch(any e){
             errors[1] = e;
         }
+        
         return this;
+    } 
+    public any function getDefaultList(){
+    	Projections = new Slatwall.model.transient.collection.CriteriaBuilderProjections().init();
+    	
+    	//get the persistant propertyList to use as the basis of smartcollection defaults.
+    	var meta = getComponentMetaData("Slatwall.model.entity." & entityName.replace("Slatwall", ""));
+    	var propertyList = "";
+    	for (var p in meta.properties){
+    		
+    		if (!isNull(p.name) && !(structKeyExists(p, "persistent") && p.persistent == false) && !((structKeyExists(p, "fieldType") && p.fieldType == "one-to-many") || structKeyExists(p, "fieldType") && p.fieldType == "many-to-many")){
+    			propertyList &= "," & p.name;
+    		}
+    	}
+        return "";
     }
     public any function add(required any restrictions){
-        return criteria.add(arguments.restrictions);
+        return getCriteria().add(arguments.restrictions);
     }
     public any function addOrder(required any order){
-        return criteria.addOrder(arguments.order);
+        return getCriteria().addOrder(arguments.order);
     }
     public any function createAlias(required any str, required any str2){
-        return criteria.createAlias(arguments.str, arguments.str2);
+        return getCriteria().createAlias(arguments.str, arguments.str2);
     }
     public any function createCriteria(required any str){
-        return criteria.createCriteria(arguments.str);
+        return getCriteria().createCriteria(arguments.str);
     }
     public any function getAlias(){
-        return criteria.getAlias();
+        return getCriteria().getAlias();
     }
     public any function getCacheRegion(){
-        return criteria.getCacheRegion();
+        return getCriteria().getCacheRegion();
     }
     public any function getComment(){
-        return criteria.getComment();
+        return getCriteria().getComment();
     }
     public any function getEntityOrClassName(){
-        return criteria.getEntityOrClassName();
+        return getCriteria().getEntityOrClassName();
     }
     public any function getFetchMode(required any str){
-        return criteria.getFetchMode(arguments.str);
+        return getCriteria().getFetchMode(arguments.str);
     }
     public any function getFetchSize(){
-        return criteria.getFetchSize();
+        return getCriteria().getFetchSize();
     }
     public any function getFirstResult(){
-        return criteria.getFirstResult();
+        return getCriteria().getFirstResult();
     }
     public any function getLockModes(){
-        return criteria.getLockModes();
+        return getCriteria().getLockModes();
     }
     public any function getMaxResults(){
-        return criteria.getMaxResults();
+        return getCriteria().getMaxResults();
     }
     public any function getProjection(){
-        return criteria.getProjection();
+        return getCriteria().getProjection();
     }
     public any function getProjectionCriteria(){
-        return criteria.getProjectionCriteria();
+        return getCriteria().getProjectionCriteria();
     }
     public any function getResultTransformer(){
-        return criteria.getResultTransformer();
+        return getCriteria().getResultTransformer();
     }
     public any function getSession(){
-        return criteria.getSession();
+        return getCriteria().getSession();
     }
     public any function getTimeout(){
-        return criteria.getTimeout();
+        return getCriteria().getTimeout();
     }
     public any function isLookupByNaturalKey(){
-        return criteria.isLookupByNaturalKey();
+        return getCriteria().isLookupByNaturalKey();
     }
     public any function isReadOnly(){
-        return criteria.isReadOnly();
+        return getCriteria().isReadOnly();
     }
     public any function isReadOnlyInitialized(){
-        return criteria.isReadOnlyInitialized();
+        return getCriteria().isReadOnlyInitialized();
     }
     public any function iterateExpressionEntries(){
-        return criteria.iterateExpressionEntries();
+        return getCriteria().iterateExpressionEntries();
     }
     public any function iterateOrderings(){
-        return criteria.iterateOrderings();
+        return getCriteria().iterateOrderings();
     }
     public any function iterateSubcriteria(){
-        return criteria.iterateSubcriteria();
+        return getCriteria().iterateSubcriteria();
     }
     public any function list(){
-        return criteria.list();
+        return getCriteria().list();
     }
     public any function scroll(){
-        return criteria.scroll();
+        return getCriteria().scroll();
     }
     public any function setCacheMode(any cacheMode){
-        return criteria.setCacheMode(arguments.cacheMode);
+        return getCriteria().setCacheMode(arguments.cacheMode);
     }
     public any function setCacheRegion(any cacheRegion){
-        return criteria.setCacheRegion(arguments.cacheRegion);
+        return getCriteria().setCacheRegion(arguments.cacheRegion);
     }
     public any function setCacheable(any bool){
-        return criteria.setCacheable(arguments.bool);
+        return getCriteria().setCacheable(arguments.bool);
     }
     public any function setComment(any comment){
-        return criteria.setComment(arguments.comment);
+        return getCriteria().setComment(arguments.comment);
     }
     public any function setFetchMode(any str, any fetchMode){
-        return criteria.setFetchMode(arguments.str, arguments.fetchMode);
+        return getCriteria().setFetchMode(arguments.str, arguments.fetchMode);
     }
     public any function setFetchSize(any int){
-        return criteria.setFetchSize(arguments.int);
+        return getCriteria().setFetchSize(arguments.int);
     }
     public any function setFirstResult(any int){
-        return criteria.setFirstResult(arguments.int);
+        return getCriteria().setFirstResult(arguments.int);
     }
     public any function setFlushMode(any flushMode){
-        return criteria.setFlushMode(arguments.flushMode);
+        return getCriteria().setFlushMode(arguments.flushMode);
     }
     public any function setLockMode(any lockMode){
-        return criteria.setLockMode(arguments.lockMode);
+        return getCriteria().setLockMode(arguments.lockMode);
     }
     public any function setMaxResult(any int){
-        return criteria.setMaxResult(arguments.int);
+        return getCriteria().setMaxResult(arguments.int);
     }
     public any function setProjection(required any projection){
-        return criteria.setProjection(arguments.projection);
+        return getCriteria().setProjection(arguments.projection);
     }
     public any function setReadOnly(any bool){
-        return criteria.setReadOnly(arguments.bool);
+        return getCriteria().setReadOnly(arguments.bool);
     }
     public any function setResultTransformer(any resultTransformer){
-        return criteria.setResultTransformer(arguments.resultTransformer);
+        return getCriteria().setResultTransformer(arguments.resultTransformer);
     }
     public any function setSession(any sessionImpl){
-        return criteria.setSession(arguments.sessionImpl);
+        return getCriteria().setSession(arguments.sessionImpl);
     }
     public any function setTimeout(any int){
-        return criteria.setTimeout(arguments.int);
+        return getCriteria().setTimeout(arguments.int);
     }
     public any function _toString(){
-        return criteria.toString();
+        return getCriteria().toString();
     }
     public any function uniqueResult(){
-        return criteria.uniqueResult();
+        return getCriteria().uniqueResult();
     }
     
 }
