@@ -265,7 +265,7 @@ angular.module('ngSlatwallModel', ['ngSlatwall']).config(['$provide', function (
                     swprid: '',
                     password: '',
                     passwordConfirm: '',
-                    accountPasswordResetID: "9c5bfd6ffe28218c49193b07780bb7ca",
+                    accountPasswordResetID: "a55b11a4bcfd0a868d40a093de01e867",
                     preProcessDisplayedFlag: 0,
                     populatedFlag: 0,
                     z: ''
@@ -414,7 +414,7 @@ angular.module('ngSlatwallModel', ['ngSlatwall']).config(['$provide', function (
                     accountEmailAddressID: '',
                     emailAddress: null,
                     verifiedFlag: 0,
-                    verificationCode: 'fcd84440deaeca380fc69ddfa5b44e6f',
+                    verificationCode: 'fd266314c71f028096a31d843f180d21',
                     remoteID: null,
                     createdDateTime: '',
                     createdByAccountID: null,
@@ -1782,7 +1782,7 @@ angular.module('ngSlatwallModel', ['ngSlatwall']).config(['$provide', function (
                 defaultValues['Audit'] = {
                     auditID: '',
                     auditType: null,
-                    auditDateTime: '1439238246756',
+                    auditDateTime: '1439238758549',
                     auditArchiveStartDateTime: null,
                     auditArchiveEndDateTime: null,
                     auditArchiveCreatedDateTime: null,
@@ -2908,7 +2908,7 @@ angular.module('ngSlatwallModel', ['ngSlatwall']).config(['$provide', function (
                 angular.forEach(entities, function (entity) {
                     $delegate['get' + entity.className] = function (options) {
                         var entityInstance = $delegate.newEntity(entity.className);
-                        var entityDataPromise = $delegate.getEntity(entity.className.charAt(0).toLowerCase() + entity.className.slice(1), options);
+                        var entityDataPromise = $delegate.getEntity(entity.className, options);
                         entityDataPromise.then(function (response) {
                             if (angular.isDefined(response.processData)) {
                                 entityInstance.$$init(response.data);
@@ -2928,7 +2928,7 @@ angular.module('ngSlatwallModel', ['ngSlatwall']).config(['$provide', function (
                     };
                     $delegate['get' + entity.className] = function (options) {
                         var entityInstance = $delegate.newEntity(entity.className);
-                        var entityDataPromise = $delegate.getEntity(entity.className.toLowerCase(), options);
+                        var entityDataPromise = $delegate.getEntity(entity.className, options);
                         entityDataPromise.then(function (response) {
                             if (angular.isDefined(response.processData)) {
                                 entityInstance.$$init(response.data);
