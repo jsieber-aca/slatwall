@@ -1,29 +1,29 @@
-component  displayname="CriteriaBuilderOrder" hint="Allows for orders in the criteria builder query" persistent="false" output="false"  
+component  displayname="CriteriaBuilderOrder" hint="Allows for orders in the criteria builder query" persistent="false" output="false" accessors="true"    
 {
-    property array errors;
-    property any order;
-    property boolean ascending;
+    property any Order;
     property string propertyName;
     
     public any function init(){
+    	Order = createObject("java", "org.hibernate.criterion.Order");
         return this;
     }
-    public CriteriaBuilderOrder function asc(required any str){
-    	variables.order = createObject("java", "org.hibernate.criterion.Order").init(attributes.str, true);
-        return variables.order;
+    
+    public any function asc(required string argPropertyName){
+    	Order = Order.asc(argPropertyName);
+        return this;
     }
-    public CriteriaBuilderOrder function desc(required any str){
-        variables.order = createObject("java", "org.hibernate.criterion.Order").init(attributes.str, false);
-        return variables.order;
+    public any function desc(required string argPropertyName){
+        Order = Order.asc(argPropertyName);
+        return this;
     }
     public any function ignoreCase(){
-        return variables.order.ignoreCase();
+        return Order.ignoreCase();
     }
     public any function toSqlString(required any criteria, required any criteriaQuery){
-        return variables.order.toSqlString(arguments.criteria, arguments.criteriaQuery);
+        return Order.toSqlString(arguments.criteria, arguments.criteriaQuery);
     }
     public any function toString(){
-        return variables.order.toString();
+        return Order.toString();
     }
     
 }

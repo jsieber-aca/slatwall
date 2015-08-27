@@ -632,75 +632,126 @@ component extends="FW1.framework" {
 	}
 	
 	public void function setupView() {
-		Restrictions = new model.transient.collection.CriteriaBuilderRestrictions().init();     //these are aggragates
-        //Subqueries = new model.transient.collection.CriteriaBuilderSubqueries().init();       //these are subqueries executes in a different context
+		/*
+		Restrictions = new model.transient.collection.CriteriaBuilderRestrictions().init();     //these are filters
+        Subqueries = new model.transient.collection.CriteriaBuilderSubqueries().init();         //these are subqueries executes in a different context
         Projections = new model.transient.collection.CriteriaBuilderProjections().init();       //these are selections
-        //Transformers = new model.transient.collection.CriteriaBuilderTransformers().init();   //these transform the result
-        //Order = new model.transient.collection.CriteriaBuilderOrder().init();                 //This is the Order by
-        
-        /**GETS max 10 records from Account where firstName equals Ian */
-        //criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
-        //writeDump(criteria);
-        //criteria.add( Restrictions._eq("firstName", "Ian") )
-        //.setMaxResults(10);
-        //var result = criteria.list();        
-        //writeDump(var=result, top=3);
-		
-		/** only returns two specific columns from the query */
+        Transformers = new model.transient.collection.CriteriaBuilderTransformers().init();     //these transform the result
+        Order = new model.transient.collection.CriteriaBuilderOrder().init();                   //Order by
+        util = new model.transient.collection.CriteriaBuilderUtil();                            //helper methods
+        */
+		/** SELECT accountID, firstName, lastName from Account limit 10 starting at 1 */
 		/*criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
         var result = criteria.setProjection(Projections.projectionList()
         .add( Projections.property("accountID"), "accountID")
         .add( Projections.property("firstName"), "firstName")
         .add( Projections.property("lastName"), "lastName"))
-        .setFirstResult(0)
-        .setMaxResults(10)
-        .list();
-        writeDump(var=result);*/
-		
-		/** returns id, first, last from Slatwall account where name (case insensitive) like bob */
-		/*criteria = new model.transient.collection.CriteriaBuilder('SlatwallOrder');
-		criteria.setProjection(Projections.projectionList()
-            .add(Projections.property("orderID"), "orderID")
-            .add(Projections.property("orderNumber"), "orderNumber"))
-            .add(Restrictions._ne("this.orderNumber", ""));
-		  writeDump(criteria.list());*/
-
+        .setFirstResult(1)
+        .setMaxResults(10);*/
+        
+        /** get count and list */
+        /*writeDump(criteria.count());
+        writeDump(criteria.list());
+        writeDump(criteria.get());*/
+        
+        
+        
 		/** Access many-to-one data (account) on the order entity */
-		writeDump("Select orderNumber, account.accountID, account.firstName, account.lastName from SlatwallOrder WHERE account.firstName = 'Ian'");
-		c = new model.transient.collection.CriteriaBuilder("SlatwallOrder")
-    		.createAlias("account", "a")                                      //<--using an alias to access the many-to-one data with.
+		/** select orderNumber, accountID, firstName, lastName from Order where firstName equals Ian limit 10 */
+		//writeDump("Select orderNumber, account.accountID, account.firstName, account.lastName from SlatwallOrder WHERE account.firstName = 'Ian'");
+		/*c = new model.transient.collection.CriteriaBuilder("SlatwallOrder")
+    		.createAlias("account", "a")                                      //<--using an alias to access the many-to-one data with.                                   
     		.add(Restrictions._eq("a.firstName", "Ian"))                      //<--adding a restriction the the account firstName must equal Ian                                                 
     		.setProjection(Projections.projectionList()                       //<--set the columns that we want returned.[^^^^]
             .add(Projections.property("orderNumber"), "orderNumber")
             .add(Projections.property("a.accountID"), "accountID"  )
             .add(Projections.property("a.firstName"), "firstName"  )
             .add(Projections.property("a.lastName") , "lastName"  ))
-            .setMaxResults(10);
+            ;
         
-		writeDump(var=c.list());
-		//tickCount = getTickCount();
+		writeDump(var=c.list());*/
+		
+		/*****************************************************************************/
 		/** Access one-to-many data (orderItems) on SlatwallOrders */
-		c = new model.transient.collection.CriteriaBuilder("SlatwallOrder")
-            .createAlias("orderItems", "oi")                                      //<--using an alias to access the many-to-one data with.
-            .add(Restrictions._like("oi.orderItemID", "40%"))                          //<--adding a restriction the the account firstName must equal Ian                                                 
-            .setProjection(Projections.projectionList()                           //<--set the columns that we want returned.[^^^^]
-            .add(Projections.property("oi.orderItemID"), "orderItemID")
-            .add(Projections.property("oi.price"), "price")
-            .add(Projections.property("oi.skuPrice"), "skuPrice")
-            .add(Projections.property("oi.quantity"), "q"));
+		/** SELECT orderItemID, price, skuPrice, and quantity from Order where order.orderitemID equals 402828b24f606f92014f650a28dd0025 */
+		
+		/*q = new model.transient.collection.CriteriaBuilder("SlatwallOrder")
+            .createAlias("orderItems", "oi")                                        //<--using an alias to access the many-to-one data with.
+            .createAlias("account", "a")                                            //<--alias account as a
+            .add(Restrictions._eq("orderID", "402828b24f606f92014f650a28dd0025") )  //<--adding a restriction the the account firstName must equal Ian                                                 
+            .setProjection(
+            	
+            	Projections.projectionList()                                        //<--set the columns that we want returned.[^^^^]
+                    .add(Projections.property("currencyCode"    ), "currencyCode")
+                    .add(Projections.property("oi.orderItemID"  ), "orderItemID")
+                    .add(Projections.property("oi.price"        ), "price")
+                    .add(Projections.property("oi.skuPrice"     ), "skuPrice")
+                    .add(Projections.property("oi.quantity"     ), "quantity")
+                    .add(Projections.property("a.firstName"     ), "firstName") 
+                    
+                );
+        q.setResultTransformer(q.Alias_To_Entity_Map);
+        //writeDump(q.get());
+        writeDump(var=q.list());*/
+        /*****************************************************************************/
         
-        writeDump(var=c.list());
-        //writeDump("Seconds: " & (getTickCount() - tickCount) * .001);
-		/** get three columns in Account where the name is like bob (case insensitive) */
-		/*criteria = new model.transient.collection.CriteriaBuilder('SlatwallAccount');
+
+        /**********************************************************************************/
+        /** Using set first result and set max result on a collection with an array      **/
+        /** of restrictions added.                                                       **/
+		/** select option from SlatwallProduct Where productCode = x or activeFlag eq 1  **/
+		/**********************************************************************************/
+		/*filters = [];
+		orfilters[1] = Restrictions._eq("productCode", "mag-01");
+		orfilters[2] = Restrictions._eq("activeFlag", util.cast(true, "boolean"));
+		orfilters[3] = Restrictions._ne("sku.skuCode", "");
+		_orValue   = Restrictions._disjunction(orfilters);
+		writedump(_orValue.toString());
+		collection = new model.transient.collection.CriteriaBuilder("SlatwallProduct")
+            .createAlias("skus", "sku")                                               
+            .add(_orValue)                                                         
+            .setProjection(Projections.projectionList()                           
+            .add(Projections.property("sku.skuCode"), "skuCode")
+            .add(Projections.property("sku.skuID"), "skuID"))
+            .setFirstResult(5)
+            .setMaxResults(25);
+        collection.setResultTransformer(collection.Alias_to_entity_map);   
+		writeDump(collection.list());*/
+		/*****************************************************************************/
+		
+		
+		
+		
+		
+		/*****************************************************************************/
+		/*filters = [];
+        andfilters[1] = Restrictions._ne("product.productCode", "mag-01");
+        andfilters[2] = Restrictions._ne("this.skuCode", "");
+        _andValue     = Restrictions._conjunction(andfilters);
         
-        var result = criteria.setProjection(Projections.projectionList()
-        .add(Projections.property("accountID"), "accountID")
-        .add(Projections.property("firstName"), "firstName")
-        .add(Projections.property("lastName"), "lastName"))
-        .add(Restrictions._ilike("this.firstName", "bob"))
-        .list();
-        writeDump(result);*/
+        
+        collection = new model.transient.collection.CriteriaBuilder("SlatwallSku")
+            .createAlias("product", "product")                                               
+            .add(_andValue)                                                            
+            .setProjection(Projections.projectionList()                           
+                .add(Projections.property("skuCode"), "skuCode")
+                .add(Projections.property("skuID"), "skuID")
+                .add(Projections.property("product.productName"), "productName")
+            );
+        collection.setResultTransformer(collection.Alias_to_entity_map);
+        writeDump(collection.list());*/
+		/*****************************************************************************/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

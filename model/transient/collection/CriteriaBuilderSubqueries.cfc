@@ -2,13 +2,24 @@
 component  output="true" accessors="true" displayname="CriteriaBuilderRestrictions" hint="This is a wrapper for the hibernate criteria builder" persistent="false"  
 {
 	property name="errors" type="array";
-	property name="subqueries" type="any";
+	
+	/** constants */
+	property name="FULL_JOIN" type="numeric" default="4"; 
+	property name="INNER_JOIN" type="numeric" default="0";
+	property name="LEFT_JOIN" type="numeric" default="1";   
+	
+	/** java objects */
+	property name="Projection"   type="any";
+	property name="Subqueries"   type="any";
 	
 	public CriteriaBuilderSubqueries function init(){
 		//Gets a list of all restrictions methods from hibernate
+		setProjection(createObject("java", "org.hibernate.criterion.Projections"));
 		setSubqueries(createObject("java", "org.hibernate.criterion.Subqueries"));
+		
 		return this;
 	}
+	
     public any function _eq(required any obj, required any detchedCriteria){
     	return subqueries.eq(arguments.obj, arguments.detchedCriteria);
     }

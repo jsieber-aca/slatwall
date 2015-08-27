@@ -31,13 +31,21 @@ component  displayname="SmartCollection" hint="This API aims to give smartList f
     }
     /** adds restrictions to the query */
     public any function addWhereCondition(strCondition, structParams, conditionOperator){
-    
+        
     }
     
     public any function addFilter(propertyIdentifier, value){
-    
+        
     }
-    
+    public any function setColumns(any columnsStruct){
+    	for (column in columnsList){
+    		Projections.projectionList()                                        
+                    .add(Projections.property(column), column);
+    	}
+    }
+    public any function setFilter(any filtersArray){
+        Criteria.add(filtersArray);
+    }
     public any function removeFilters(propertyIdentifier, whereGroup){
     	
     }
