@@ -721,8 +721,6 @@ component extends="FW1.framework" {
 		
 		
 		
-		
-		
 		/*****************************************************************************/
 		/*filters = [];
         andfilters[1] = Restrictions._ne("product.productCode", "mag-01");
@@ -745,17 +743,7 @@ component extends="FW1.framework" {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		param name="request.context.ajaxRequest" default="false";
 		
 		if(request.context.ajaxRequest) {
