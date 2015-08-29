@@ -227,7 +227,7 @@ component extends="mxunit.framework.TestCase" {
         assertEquals("(product.productcode<>mag-01 and this.skucode<>)", _andValue);
         writeDump(_andValue.toString());
         
-        collection = new model.transient.collection.CriteriaBuilder("SlatwallSku")
+        collection = new Slatwall.model.transient.collection.CriteriaBuilder("SlatwallSku")
             .createAlias("product", "product")                                               
             .add(_andValue) //<--use the and string                                                           
             .setProjection(Projections.projectionList()                           
@@ -239,6 +239,24 @@ component extends="mxunit.framework.TestCase" {
         
         writeDump(collection.list());
         
+    }
+    
+    /** tests using nested criteria to obtain collection of collection */
+    public void function criteriaRestrictionOnNestedCriteriaTestCase(){
+        //do the subquery, filtering on ids
+        subquery = new Slatwall.model.transient.collection.CriteriaBuilder("SlatwallSku")
+            .createAlias("skus", "sku")
+            .add(Restrictions._eq("sku.skuID", "8a8080834721af1a0147220714810083"))
+            .setFirstResult(0)
+            .setMaxResults(1) 
+            .setProjection(Projections.id());
+        //do the main query joining the subquery
+        
+        criteria = new Slatwall.model.transient.collection.CriteriaBuilder("SlatwallProduct")
+            .add(Subqueries._propertyIn("id", subquery))
+            .setFetchMode(criteria.Full_Join);
+            
+        writeDump(var=criteria.list(), top=2);       
     }
 }
 

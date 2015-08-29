@@ -1,5 +1,5 @@
 /** wraps the restrictions hibernate class with helper methods to make it easier to deal will collections */
-component  output="true" accessors="true" displayname="CriteriaBuilderRestrictions" hint="This is a wrapper for the hibernate criteria builder" persistent="false"  
+component  output="true" accessors="true" displayname="CriteriaBuilderSubqueries" hint="This is a wrapper for the hibernate criteria builder subqueries" persistent="false"  
 {
 	property name="errors" type="array";
 	
@@ -15,7 +15,7 @@ component  output="true" accessors="true" displayname="CriteriaBuilderRestrictio
 	public CriteriaBuilderSubqueries function init(){
 		//Gets a list of all restrictions methods from hibernate
 		setProjection(createObject("java", "org.hibernate.criterion.Projections"));
-		setSubqueries(createObject("java", "org.hibernate.criterion.Subqueries"));
+		subqueries =createObject("java", "org.hibernate.criterion.Subqueries");
 		
 		return this;
 	}
@@ -102,7 +102,8 @@ component  output="true" accessors="true" displayname="CriteriaBuilderRestrictio
     	return subqueries.propertyGtSome(arguments.str, arguments.detchedCriteria);
     }
     public any function _propertyIn(required any str, required any detchedCriteria){
-    	return subqueries.propertyIn(arguments.str, arguments.detchedCriteria);
+    	subqueries = subqueries.propertyIn(arguments.str, arguments.detchedCriteria);
+    	return this;
     }
     public any function _propertyLe(required any str, required any detchedCriteria){
     	return subqueries.propertyLe(arguments.str, arguments.detchedCriteria);

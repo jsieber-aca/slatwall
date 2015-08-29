@@ -57,8 +57,8 @@ component  displayname="CriteriaBuilder" hint="The criteria builder" accessors="
         return this;
     }
     public any function createCriteria(required any str){
-    	criteria = criteria.createCriteria(arguments.str);
-        return this;
+    	//criteria = criteria.createCriteria(arguments.str);
+        return criteria.createCriteria(arguments.str);
     }
     public any function get(){
         return criteria.uniqueResult();
