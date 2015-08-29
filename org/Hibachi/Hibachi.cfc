@@ -571,8 +571,7 @@ component extends="FW1.framework" {
 		endHibachiLifecycle();
 		// Announce the applicationRequestStart event
 		getHibachiScope().getService("hibachiEventService").announceEvent(eventName="onApplicationRequestEnd");
-		
-		
+        
 		// Check for an API Response
 		if(request.context.apiRequest) {
 				
