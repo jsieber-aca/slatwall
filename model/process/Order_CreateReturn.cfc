@@ -78,6 +78,9 @@ component output="false" accessors="true" extends="HibachiProcess" {
 	public array function getRefundOrderPaymentIDOptions() {
 		if(!structKeyExists(variables, "refundOrderPaymentIDOptions")) {
 			variables.refundOrderPaymentIDOptions = [];
+			
+			
+			
 			for(var orderPayment in getOrder().getOrderPayments()) {
 				arrayAppend(variables.refundOrderPaymentIDOptions, {name=orderPayment.getSimpleRepresentation(), value=orderPayment.getOrderPaymentID()});
 			}

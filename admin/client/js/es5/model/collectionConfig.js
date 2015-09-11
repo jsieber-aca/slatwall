@@ -1,58 +1,20 @@
 var slatwalladmin;
 (function (slatwalladmin) {
     var Column = (function () {
-        function Column(propertyIdentifier, title, isVisible, isDeletable, isSearchable, isExportable, ormtype, attributeID, attributeSetObject) {
+        function Column(propertyIdentifier, title, isVisible, isDeletable, isSearchable, isExportable, persistent, ormtype, attributeID, attributeSetObject) {
             this.propertyIdentifier = propertyIdentifier;
             this.title = title;
             this.isVisible = isVisible;
             this.isDeletable = isDeletable;
             this.isSearchable = isSearchable;
             this.isExportable = isExportable;
+            this.persistent = persistent;
             this.ormtype = ormtype;
             this.attributeID = attributeID;
             this.attributeSetObject = attributeSetObject;
-            return this;
         }
-        Column.prototype.setColumn = function (propertyIdentifier) {
-            this.propertyIdentifier = propertyIdentifier;
-            return this;
-        };
-        ;
-        Column.prototype.setTitle = function (title) {
-            this.title = title;
-            return this;
-        };
-        Column.prototype.setVisible = function (isVisible) {
-            this.isVisible = isVisible;
-            return this;
-        };
-        Column.prototype.setDeletable = function (isDeletable) {
-            this.isDeletable = isDeletable;
-            return this;
-        };
-        Column.prototype.setSearchable = function (isSearchable) {
-            this.isSearchable = isSearchable;
-            return this;
-        };
-        Column.prototype.setExportable = function (isExportable) {
-            this.isExportable = isExportable;
-            return this;
-        };
-        Column.prototype.setOrmType = function (ormType) {
-            this.ormtype = ormType;
-            return this;
-        };
-        Column.prototype.setAttributeID = function (attributeID) {
-            this.attributeID = attributeID;
-            return this;
-        };
-        Column.prototype.setAttributeSetObject = function (attributeSetObject) {
-            this.attributeSetObject = attributeSetObject;
-            return this;
-        };
         return Column;
     })();
-    slatwalladmin.Column = Column;
     var Filter = (function () {
         function Filter(propertyIdentifier, value, comparisonOperator, logicalOperator) {
             this.propertyIdentifier = propertyIdentifier;
@@ -124,7 +86,6 @@ var slatwalladmin;
                 _this.orderBy = jsonCollection.orderBy;
                 _this.pageShow = jsonCollection.pageShow;
                 _this.defaultColumns = jsonCollection.defaultColumns;
-                return _this;
             };
             this.getCollectionConfig = function () {
                 return {
@@ -143,7 +104,7 @@ var slatwalladmin;
                 return _this.baseEntityName.charAt(0).toUpperCase() + _this.baseEntityName.slice(1);
             };
             this.getOptions = function () {
-                return {
+                var options = {
                     columnsConfig: angular.toJson(_this.columns),
                     filterGroupsConfig: angular.toJson(_this.filterGroups),
                     joinsConfig: angular.toJson(_this.joins),
@@ -152,6 +113,10 @@ var slatwalladmin;
                     keywords: _this.keywords,
                     defaultColumns: _this.defaultColumns
                 };
+                if (angular.isDefined(_this.id)) {
+                    options['id'] = _this.id;
+                }
+                return options;
             };
             this.debug = function () {
                 return _this;
@@ -199,7 +164,6 @@ var slatwalladmin;
                         _this.joins.push(new Join(collection.slice(1), collection.toLowerCase().replace(/\./g, '_')));
                     }
                 }
-                return _this;
             };
             this.addAlias = function (propertyIdentifier) {
                 var parts = propertyIdentifier.split('.');
@@ -213,49 +177,53 @@ var slatwalladmin;
             };
             this.addColumn = function (column, title, options) {
                 if (title === void 0) { title = ''; }
-                if (!_this.columns) {
+                if (options === void 0) { options = {}; }
+                var isVisible = true, isDeletable = true, isSearchable = true, isExportable = true, persistent, ormtype = 'string', lastProperty = column.split('.').pop();
+                if (angular.isUndefined(_this.columns)) {
                     _this.columns = [];
                 }
-                if (!angular.isString(column) && !angular.isUndefined(column)) {
-                    //using a class column builder.
-                    _this.columns.push(column);
-                    return _this;
+                if (!angular.isUndefined(options['isVisible'])) {
+                    isVisible = options['isVisible'];
                 }
-                if (options.isExportable && !options.isVisible) {
-                    options.isExportable = false;
+                if (!angular.isUndefined(options['isDeletable'])) {
+                    isDeletable = options['isDeletable'];
                 }
-                if (!options.ormType && _this.collection.metaData[column] && _this.collection.metaData[column].ormtype) {
-                    options.ormType = _this.collection.metaData[column].ormtype;
+                if (!angular.isUndefined(options['isSearchable'])) {
+                    isSearchable = options['isSearchable'];
                 }
-                _this.columns.push(new Column(column, title, options.isVisible, options.isDeletable, options.isSearchable, options.isExportable, options.ormType, options.attributeID, options.attributeSetObject));
-                return _this;
+                if (!angular.isUndefined(options['isExportable'])) {
+                    isExportable = options['isExportable'];
+                }
+                if (angular.isUndefined(options['isExportable']) && !isVisible) {
+                    isExportable = false;
+                }
+                if (!angular.isUndefined(options['ormtype'])) {
+                    ormtype = options['ormtype'];
+                }
+                else if (_this.collection.metaData[lastProperty] && _this.collection.metaData[lastProperty].ormtype) {
+                    ormtype = _this.collection.metaData[lastProperty].ormtype;
+                }
+                if (angular.isDefined(_this.collection.metaData[lastProperty])) {
+                    persistent = _this.collection.metaData[lastProperty].persistent;
+                }
+                _this.columns.push(new Column(column, title, isVisible, isDeletable, isSearchable, isExportable, ormtype, options['attributeID'], options['attributeSetObject']));
             };
             this.setDisplayProperties = function (propertyIdentifier, title, options) {
                 if (title === void 0) { title = ''; }
                 if (options === void 0) { options = {}; }
                 var _DividedColumns = propertyIdentifier.trim().split(',');
                 var _DividedTitles = title.trim().split(',');
-                if (_DividedColumns.length > 0) {
-                    _DividedColumns.forEach(function (column, index) {
-                        column = column.trim();
-                        //this.addJoin(column);
-                        if (_DividedTitles[index] !== undefined && _DividedTitles[index] != '') {
-                            title = _DividedTitles[index].trim();
-                        }
-                        else {
-                            title = _this.$slatwall.getRBKey("entity." + _this.baseEntityName.toLowerCase() + "." + column.toLowerCase());
-                        }
-                        _this.addColumn(_this.formatCollectionName(column), title, options);
-                    });
-                }
-                else {
-                    //this.addJoin(propertyIdentifier);
-                    propertyIdentifier = _this.addAlias(propertyIdentifier);
-                    if (title == '')
-                        title = _this.$slatwall.getRBKey("entity." + _this.baseEntityName.toLowerCase() + "." + propertyIdentifier.toLowerCase());
-                    _this.addColumn(_this.formatCollectionName(propertyIdentifier), title, options);
-                }
-                return _this;
+                _DividedColumns.forEach(function (column, index) {
+                    column = column.trim();
+                    //this.addJoin(column);
+                    if (!angular.isUndefined(_DividedTitles[index]) && _DividedTitles[index].trim() != '') {
+                        title = _DividedTitles[index].trim();
+                    }
+                    else {
+                        title = _this.$slatwall.getRBKey("entity." + _this.baseEntityName + "." + column);
+                    }
+                    _this.addColumn(_this.formatCollectionName(column), title, options);
+                });
             };
             this.addFilter = function (propertyIdentifier, value, comparisonOperator, logicalOperator) {
                 if (comparisonOperator === void 0) { comparisonOperator = '='; }
@@ -263,13 +231,11 @@ var slatwalladmin;
                 if (_this.filterGroups[0].filterGroup.length && !logicalOperator)
                     logicalOperator = 'AND';
                 _this.filterGroups[0].filterGroup.push(new Filter(_this.formatCollectionName(propertyIdentifier), value, comparisonOperator, logicalOperator));
-                return _this;
             };
             this.addCollectionFilter = function (propertyIdentifier, displayPropertyIdentifier, displayValue, collectionID, criteria, fieldtype, readOnly) {
                 if (criteria === void 0) { criteria = 'One'; }
                 if (readOnly === void 0) { readOnly = false; }
                 _this.filterGroups[0].filterGroup.push(new CollectionFilter(_this.formatCollectionName(propertyIdentifier), displayPropertyIdentifier, displayValue, collectionID, criteria, fieldtype, readOnly));
-                return _this;
             };
             this.setOrderBy = function (propertyIdentifier, direction) {
                 if (direction === void 0) { direction = 'DESC'; }
@@ -278,32 +244,35 @@ var slatwalladmin;
                 }
                 _this.addJoin(propertyIdentifier);
                 _this.orderBy.push(new OrderBy(_this.formatCollectionName(propertyIdentifier), direction));
-                return _this;
             };
             this.setCurrentPage = function (pageNumber) {
                 _this.currentPage = pageNumber;
-                return _this;
             };
             this.setPageShow = function (NumberOfPages) {
                 _this.pageShow = NumberOfPages;
-                return _this;
             };
             this.setKeywords = function (keyword) {
                 _this.keywords = keyword;
-                return _this;
             };
-            if (this.baseEntityName) {
-                try {
-                    this.collection = this.$slatwall['new' + this.getEntityName()]();
+            this.useDefaultColumns = function (flag) {
+                if (flag === void 0) { flag = true; }
+                _this.defaultColumns = flag;
+            };
+            this.setId = function (id) {
+                _this.id = id;
+            };
+            this.getEntity = function (id) {
+                if (angular.isDefined(id)) {
+                    _this.setId(id);
                 }
-                catch (e) {
-                    throw "can't instantiate without entity name specified: " + e;
-                }
-                if (!this.baseEntityAlias) {
+                return _this.$slatwall.getEntity(_this.baseEntityName, _this.getOptions());
+            };
+            if (!angular.isUndefined(this.baseEntityName)) {
+                this.collection = this.$slatwall['new' + this.getEntityName()]();
+                if (angular.isUndefined(this.baseEntityAlias)) {
                     this.baseEntityAlias = '_' + this.baseEntityName.toLowerCase();
                 }
             }
-            return this;
         }
         return CollectionConfig;
     })();
