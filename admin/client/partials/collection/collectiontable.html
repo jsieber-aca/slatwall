@@ -1,3 +1,35 @@
+<div>
+<sw:entity-list>
+    <!--- entities="['Product', 'Sku']" properties="[['productID','productName', 'productCode'],['skuID', 'skuCode']]" template="none" debug="on" --->
+    <!--- Display Product Data using three columns --->
+    <sw:entity entity="Product" id="402828ee4fb87952014fbd327a060024" debug="on" properties="['productID', 'productCode', 'productDescription']"> 
+        <div ng-repeat="product in $parent.Product">
+            Product Code:        {{ product.productCode        }}
+            Product ID:          {{ product.productID          }}
+            Product Description: {{ product.productDescription }}
+        </div>    
+    </sw:entity>
+    
+    <!--- Display Sku Data using one column --->
+    <sw:entity entity="Sku" id="someID" debug="on" properties="['skuID', 'skuCode']"> 
+        <div ng-repeat="sku in $parent.Sku">
+            SkuCode: {{sku.skuCode}}
+        </div>
+    </sw:entity>
+    
+    <!--- Display Account Data using three columns --->
+    <sw:entity entity="Account" id="someID" debug="on" properties="['accountID', 'firstName', 'lastName']"> 
+        <div ng-repeat="account in $parent.Account">
+            Account:{{account.accountID}}-{{account.firstName}} {{account.lastName}}
+        </div>
+    </sw:entity>
+    
+    <!--- Outside of an entity tag - you can mix and match data from the entity tags --->
+    <div>Mix and Match: {{$parent.Product[0].productName}} - {{$parent.Sku[0].skuID}}</div>
+    
+    
+</sw:entity-list>
+</div>
 <span ng-if="collection.failed === true">Bad Collection Config or Bad Data</span>
 <div  ng-if="!collection.failed && collectionObject" class="table-responsive s-filter-table-box" >
 	<table class="table table-bordered table-hover" >
