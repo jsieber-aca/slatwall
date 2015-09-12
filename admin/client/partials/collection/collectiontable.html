@@ -3,30 +3,31 @@
     <!--- entities="['Product', 'Sku']" properties="[['productID','productName', 'productCode'],['skuID', 'skuCode']]" template="none" debug="on" --->
     <!--- Display Product Data using three columns --->
     <sw:entity entity="Product" id="402828ee4fb87952014fbd327a060024" debug="on" properties="['productID', 'productCode', 'productDescription']"> 
-        <div ng-repeat="product in $parent.Product">
-            Product Code:        {{ product.productCode        }}
-            Product ID:          {{ product.productID          }}
-            Product Description: {{ product.productDescription }}
+        <div>
+            Product Code:        {{ $parent.Product.productCode}}
+            Product ID:          {{ $parent.Product.productID  }}
+            Product Description: {{ $parent.product.productDescription }}
         </div>    
     </sw:entity>
     
-    <!--- Display Sku Data using one column --->
-    <sw:entity entity="Sku" id="someID" debug="on" properties="['skuID', 'skuCode']"> 
-        <div ng-repeat="sku in $parent.Sku">
-            SkuCode: {{sku.skuCode}}
+    <!--- Display Sku Data using one column and returning one record --->
+    <sw:entity entity="Sku" debug="on" properties="['skuID', 'skuCode']"> 
+        <div ng-repeat="sku in $parent.Skus">
+            Sku:{{sku.skuID}}   -   {{sku.skuCode}}
         </div>
     </sw:entity>
     
-    <!--- Display Account Data using three columns --->
-    <sw:entity entity="Account" id="someID" debug="on" properties="['accountID', 'firstName', 'lastName']"> 
-        <div ng-repeat="account in $parent.Account">
-            Account:{{account.accountID}}-{{account.firstName}} {{account.lastName}}
+    <!--- Display Account Data using three columns, returning all the records. --->
+    <sw:entity entity="Account" debug="on" properties="['accountID', 'firstName', 'lastName']"> 
+        <div ng-repeat="account in $parent.Accounts">
+            Account:{{account.accountID}}   -   {{account.firstName}} {{account.lastName}}
         </div>
     </sw:entity>
     
     <!--- Outside of an entity tag - you can mix and match data from the entity tags --->
-    <div>Mix and Match: {{$parent.Product[0].productName}} - {{$parent.Sku[0].skuID}}</div>
+    <div>Mix and Match: {{records.Product.productName}} - {{records.Sku[0].skuID}}</div>
     
+    Parent:
     
 </sw:entity-list>
 </div>

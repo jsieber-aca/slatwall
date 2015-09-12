@@ -79,9 +79,10 @@ component output="false" accessors="true" extends="HibachiProcess" {
 		if(!structKeyExists(variables, "refundOrderPaymentIDOptions")) {
 			variables.refundOrderPaymentIDOptions = [];
 			
+			var opSmartList = getOrder().getOrderPaymentsSmartList();
+			opSmartList.addFilter('orderPaymentStatusType.systemCode', 'opstActive');
 			
-			
-			for(var orderPayment in getOrder().getOrderPayments()) {
+			for(var orderPayment in opSmartList.getRecords()) {
 				arrayAppend(variables.refundOrderPaymentIDOptions, {name=orderPayment.getSimpleRepresentation(), value=orderPayment.getOrderPaymentID()});
 			}
 			arrayAppend(variables.refundOrderPaymentIDOptions, {name=rbKey('define.new'), value=""});

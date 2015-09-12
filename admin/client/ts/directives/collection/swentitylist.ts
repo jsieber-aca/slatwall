@@ -22,7 +22,7 @@ angular.module('slatwalladmin').directive('swEntityList', [
 					}else if (arguments.length == 1 && $scope.debug == "on"){
 						console.log(msg);
 					}	
-				};
+				}; 
 				this.depth = 0; //<--this is the root depth.
 				this.getDepth = function(){
 					return this.depth;
@@ -41,9 +41,17 @@ angular.module('slatwalladmin').directive('swEntityList', [
 					return $scope[name];
 				}
 				this.addEntity = function(name, data){
+					console.log("Data Length", data.length);
 					if (angular.isDefined(name) && angular.isDefined(data)){
-						console.log("Adding data for", name, data);
-						$scope[name] = data;	
+						if (angular.isArray(data) && angular.isDefined(data.length) && data.length > 1){
+							console.log("Adding data for records: ", name, data);
+							$scope[name + "s"] = data;	
+						}
+						else if(angular.isUndefined(data.length)){
+							console.log("Adding data for record: ", name, data);
+							$scope[name] = data;	
+						}
+						
 					}
 				}
 				this.removeEntity = function(entity){
@@ -66,7 +74,7 @@ angular.module('slatwalladmin').directive('swEntityList', [
 				this.debug("Entities: ", this.getEntities());
 				
 			},
-			controllerAs: "parent",
+			controllerAs: "records",
 			template: function getTemplate(tElement, tAttributes){
 				var hasChildren = false;
 				if (tElement.find('swEntity')){

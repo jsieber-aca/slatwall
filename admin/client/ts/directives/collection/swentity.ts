@@ -20,7 +20,7 @@ angular.module('slatwalladmin').directive('swEntity', [
 			link: function(scope, element, attrs, parentCtrl){
 				/**Sets the gathered data into scope.
 				 */
-				
+				 
 				scope.setEntityData = function(name, data){
 					if (angular.isDefined(name) && angular.isDefined(data)){
 						debug("adding data in child for: " + name, data);
@@ -63,11 +63,15 @@ angular.module('slatwalladmin').directive('swEntity', [
 				debug("Collection Config:", scope.collectionConfig);
 				var entityPromise = collectionConfig.getEntity();
 				
-				entityPromise.then(function(value){
-					debug("Entity data:", value); 
-					//set it both on parent and child scope.
-					parentCtrl.addEntity(scope.entity, value.pageRecords);
-					console.log("Parent Controller Data: ", parentCtrl);
+				entityPromise.then(function(data){
+					debug("Entity data:", data); 
+					if (angular.isDefined(data.pageRecords)){
+						parentCtrl.addEntity(scope.entity, data.pageRecords);
+						console.log("Parent Controller Data: ", parentCtrl);
+					}else{
+						parentCtrl.addEntity(scope.entity, data);
+						console.log("Parent Controller Data: ", parentCtrl);
+					}
 				});
 			} 
 		};
