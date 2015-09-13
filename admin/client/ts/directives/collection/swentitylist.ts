@@ -14,7 +14,7 @@ angular.module('slatwalladmin').directive('swEntityList', [
 			transclude: true,
 			controller: function($scope, $element){
 				this.maxDepth = 1; //<-- this is the default depth.
-				
+				 
 				/** debug msg */
 				this.debug = function(msg, optional){
 					if (arguments.length > 1 && $scope.debug == "on"){

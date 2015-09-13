@@ -104,7 +104,6 @@ module slatwalladmin{
 
         constructor(
             private $slatwall,
-
             public  baseEntityName?:string,
             public  baseEntityAlias?:string,
             private columns?:Column[],

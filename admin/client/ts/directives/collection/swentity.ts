@@ -17,6 +17,10 @@ angular.module('slatwalladmin').directive('swEntity', [
 				template:"@"
 			},
 			transclude: false,
+			controller: function($scope, $element){
+					
+			},
+			controllerAs:"entity",
 			link: function(scope, element, attrs, parentCtrl){
 				/**Sets the gathered data into scope.
 				 */
@@ -49,6 +53,8 @@ angular.module('slatwalladmin').directive('swEntity', [
 						debug("setting property on entity", scope.properties[property]);
 						collectionConfig.setDisplayProperties(scope.properties[property]);
 					}	
+				}else{
+					collectionConfig.useDefaultColumns(true);
 				}
 				
 				/**Set an ID

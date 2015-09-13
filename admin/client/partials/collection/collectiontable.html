@@ -1,33 +1,66 @@
 <div>
 <sw:entity-list>
     <!--- entities="['Product', 'Sku']" properties="[['productID','productName', 'productCode'],['skuID', 'skuCode']]" template="none" debug="on" --->
-    <!--- Display Product Data using three columns --->
+
+    <!--- Display Product Data using three columns returning a specific record by ID --->
     <sw:entity entity="Product" id="402828ee4fb87952014fbd327a060024" debug="on" properties="['productID', 'productCode', 'productDescription']"> 
-        <div>
-            Product Code:        {{ $parent.Product.productCode}}
-            Product ID:          {{ $parent.Product.productID  }}
-            Product Description: {{ $parent.product.productDescription }}
-        </div>    
+        <table class="table table-striped table-bordered table-condensed">
+        	<thead>
+        		<tr>
+        			<td>Product Code</td>
+        			<td>Product ID</td>
+        			<td>Description</td>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		<tr>
+        			<td>{{$parent.Product.productCode}}</td>
+                    <td>{{$parent.Product.productID}}</td>
+                    <td>{{$parent.Product.productDescription}}</td>
+        		</tr>
+        	</tbody>
+            <tfoot>
+            	<tr>
+            		<td colspan="3">Example entity display.</td>
+            	</tr>
+            </tfoot>
+        </table>    
     </sw:entity>
     
-    <!--- Display Sku Data using one column and returning one record --->
-    <sw:entity entity="Sku" debug="on" properties="['skuID', 'skuCode']"> 
-        <div ng-repeat="sku in $parent.Skus">
-            Sku:{{sku.skuID}}   -   {{sku.skuCode}}
-        </div>
+    <!--- all sku records using default columns. Notice the ng-repeat just on the data not throwing an error. --->
+    <sw:entity entity="Sku" debug="on"> 
+    	<table class="table table-striped table-bordered table-condensed">
+        	<thead>
+                <tr>
+                    <td>Sku ID</td>
+                    <td>Sku Code</td>
+                    <td>Image File</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="sku in $parent.Skus">
+                    <td>{{sku.skuID}}</td>
+                    <td>{{sku.skuCode}}</td>
+                    <td>{{sku.imageFile}}</td>
+                </tr>
+            </tbody>
+           <tfoot>
+           	    <tr>
+           	    	<td colspan="example of returning all sku records using default columns"></td>
+           	    </tr>
+           </tfoot>
+       </table>
     </sw:entity>
     
     <!--- Display Account Data using three columns, returning all the records. --->
     <sw:entity entity="Account" debug="on" properties="['accountID', 'firstName', 'lastName']"> 
         <div ng-repeat="account in $parent.Accounts">
-            Account:{{account.accountID}}   -   {{account.firstName}} {{account.lastName}}
+            Account:{{account.accountID}}   -   ({{account.firstName}} {{account.lastName}})
         </div>
     </sw:entity>
     
     <!--- Outside of an entity tag - you can mix and match data from the entity tags --->
-    <div>Mix and Match: {{records.Product.productName}} - {{records.Sku[0].skuID}}</div>
-    
-    Parent:
+    <div>Mix and Match: {{$parent.Product.productCode}} - {{$parent.Sku[0].skuID}}</div>
     
 </sw:entity-list>
 </div>
