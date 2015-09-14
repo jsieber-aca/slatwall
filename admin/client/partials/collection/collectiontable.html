@@ -1,9 +1,15 @@
 <div>
 <sw:entity-list>
     <!--- entities="['Product', 'Sku']" properties="[['productID','productName', 'productCode'],['skuID', 'skuCode']]" template="none" debug="on" --->
-
+    <!--- Get order items on an order --->
+    <sw:entity entity="Order" debug="on" properties="['orderID', 'orderNumber', 'calculatedTotal']" id="402828d74f88f020014f8ab0ee960329">
+       <ul>
+           <li>{{$parent.Order.orderID}}, {{$parent.Order.orderNumber}}, {{$parent.Order.calculatedTotal}}</li>
+       </ul>
+    </sw:entity>
+    
     <!--- Display Product Data using three columns returning a specific record by ID --->
-    <sw:entity entity="Product" id="402828ee4fb87952014fbd327a060024" debug="on" properties="['productID', 'productCode', 'productDescription']"> 
+    <sw:entity entity="Product" id="402828ee4fb87952014fbd327a060024" debug="on" properties="['productID', 'productCode', 'productDescription']">     
         <table class="table table-striped table-bordered table-condensed">
         	<thead>
         		<tr>
@@ -28,9 +34,11 @@
     </sw:entity>
     
     <!--- all sku records using default columns. Notice the ng-repeat just on the data not throwing an error. --->
-    <sw:entity entity="Sku" debug="on"> 
-    	<table class="table table-striped table-bordered table-condensed">
-        	<thead>
+    <sw:entity entity="Sku" debug="on">
+    	<div>
+    		
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
                 <tr>
                     <td>Sku ID</td>
                     <td>Sku Code</td>
@@ -45,22 +53,28 @@
                 </tr>
             </tbody>
            <tfoot>
-           	    <tr>
-           	    	<td colspan="example of returning all sku records using default columns"></td>
-           	    </tr>
+                <tr>
+                    <td colspan="3">example of returning all sku records using default columns</td>
+                </tr>
            </tfoot>
        </table>
+       </div>
     </sw:entity>
     
-    <!--- Display Account Data using three columns, returning all the records. --->
+    
+    <!--- Display Account Data using list, returning all the records. --->
     <sw:entity entity="Account" debug="on" properties="['accountID', 'firstName', 'lastName']"> 
         <div ng-repeat="account in $parent.Accounts">
-            Account:{{account.accountID}}   -   ({{account.firstName}} {{account.lastName}})
+            <ul class="list-group">
+            	<li class="list-group-item">
+            		<b>Account:</b>{{account.accountID}} :  ({{account.firstName}} {{account.lastName}})
+                </li>
+            </ul>
         </div>
     </sw:entity>
     
     <!--- Outside of an entity tag - you can mix and match data from the entity tags --->
-    <div>Mix and Match: {{$parent.Product.productCode}} - {{$parent.Sku[0].skuID}}</div>
+    <div>Mix and Match: {{$parent.Product.productCode}} - {{$parent.Skus[0].skuID}}</div>
     
 </sw:entity-list>
 </div>

@@ -14,7 +14,7 @@ angular.module('slatwalladmin').directive('swEntityList', [
 			transclude: true,
 			controller: function($scope, $element){
 				this.maxDepth = 1; //<-- this is the default depth.
-				 
+				
 				/** debug msg */
 				this.debug = function(msg, optional){
 					if (arguments.length > 1 && $scope.debug == "on"){
@@ -86,7 +86,7 @@ angular.module('slatwalladmin').directive('swEntityList', [
 					return "<sw:entity ng-repeat='entity in entities track by $index' entity='entity' properties='properties[$index]' debug='on'></sw:entity>";
 				}
 			}, 
-			link: function(scope, element, attrs){
+			link: function(scope, element, attrs, ctrl, transclude){
 				
 			} 
 		};

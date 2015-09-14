@@ -16,21 +16,12 @@ angular.module('slatwalladmin').directive('swEntity', [
 				debug:"@",
 				template:"@"
 			},
-			transclude: false,
+			transclude: false, 
 			controller: function($scope, $element){
-					
+					//this is the default controller if one isn't specified as an argument.
 			},
-			controllerAs:"entity",
+			controllerAs:"entityCtrl",
 			link: function(scope, element, attrs, parentCtrl){
-				/**Sets the gathered data into scope.
-				 */
-				 
-				scope.setEntityData = function(name, data){
-					if (angular.isDefined(name) && angular.isDefined(data)){
-						debug("adding data in child for: " + name, data);
-						scope[name] = data;
-					}
-				};
 				/**Pushes debug messages to the console if debug is enabled (for frontend guys);
 				 */
 				var debug = function(msg, optional){
@@ -74,9 +65,12 @@ angular.module('slatwalladmin').directive('swEntity', [
 					if (angular.isDefined(data.pageRecords)){
 						parentCtrl.addEntity(scope.entity, data.pageRecords);
 						console.log("Parent Controller Data: ", parentCtrl);
+						
+						
 					}else{
 						parentCtrl.addEntity(scope.entity, data);
 						console.log("Parent Controller Data: ", parentCtrl);
+						 
 					}
 				});
 			} 
