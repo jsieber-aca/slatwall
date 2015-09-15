@@ -15,7 +15,7 @@ component  output="true" accessors="true" displayname="CriteriaBuilderSubqueries
 	public CriteriaBuilderSubqueries function init(){
 		//Gets a list of all restrictions methods from hibernate
 		setProjection(createObject("java", "org.hibernate.criterion.Projections"));
-		subqueries =createObject("java", "org.hibernate.criterion.Subqueries");
+		subqueries = createObject("java", "org.hibernate.criterion.Subqueries");
 		
 		return this;
 	}
@@ -102,8 +102,8 @@ component  output="true" accessors="true" displayname="CriteriaBuilderSubqueries
     	return subqueries.propertyGtSome(arguments.str, arguments.detchedCriteria);
     }
     public any function _propertyIn(required any str, required any detchedCriteria){
-    	subqueries = subqueries.propertyIn(arguments.str, arguments.detchedCriteria);
-    	return this;
+    	return subqueries.propertyIn(arguments.str, arguments.detchedCriteria);
+    	//return this;
     }
     public any function _propertyLe(required any str, required any detchedCriteria){
     	return subqueries.propertyLe(arguments.str, arguments.detchedCriteria);

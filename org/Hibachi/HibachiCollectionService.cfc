@@ -596,7 +596,13 @@ component output="false" accessors="true" extends="HibachiService" {
 			var headers = StructKeyList(collectionData[1]);
 			getService('hibachiService').export( collectionData, headers, headers, "ExportCollection", "csv" );
 	}//<--end function
-
+    
+    /** get collection of collection */
+    public Collection function getCollectionOfCollection(collectionID, collectionConfigStruct){
+    	
+    	
+    	
+    }
 	// =====================  END: Logical Methods ============================
 	
 	// ===================== START: DAO Passthrough ===========================
