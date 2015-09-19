@@ -6,6 +6,7 @@
 *.pfx
 _notes/
 aspnet_client/
+admin/client/js/*
 settings.xml
 ehthumbs.db
 thumbs.db
