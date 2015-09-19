@@ -63,11 +63,20 @@
     
     
     <!--- Display Account Data using list, returning all the records. --->
-    <sw:entity entity="Account" debug="on" properties="['accountID', 'firstName', 'lastName']"> 
+    <sw:entity entity="Account" debug="on" properties="['accountID', 'firstName', 'lastName', 'primaryAddress.accountAddressID']"> 
         <div ng-repeat="account in $parent.Accounts">
             <ul class="list-group">
             	<li class="list-group-item">
-            		<b>Account:</b>{{account.accountID}} :  ({{account.firstName}} {{account.lastName}})
+            		<b>Account:</b>{{account.accountID}} :  ({{account.firstName}} {{account.lastName}}) {{account.primaryAddress_accountAddressID}}
+            		  <ul>
+            		  	<sw:entity entity="AccountAddress" id="{{account.primaryAddress_accountAddressID}}" debug="on" properties="['address.addressID']">
+            		  		Address ID for Primary Account Address is: {{$parent.$parent.AccountAddress.address_addressID}}
+            		  		
+            		  	</sw:entity>
+            		  </ul> 
+            		<!---<ul ng-repeat="primaryAddressProperty in $parent.Accounts.primaryAddress">
+            			<li>{{primaryAddressProperty}}</li>
+            		</ul>--->
                 </li>
             </ul>
         </div>
