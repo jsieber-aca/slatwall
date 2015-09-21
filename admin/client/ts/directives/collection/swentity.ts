@@ -5,23 +5,24 @@ angular.module('slatwalladmin').directive('swEntity', [
 	
 	function($http, $compile, $log, collectionPartialsPath, paginationService, $slatwall){
 		return {
-			require: '^swEntityList',
+			require: '^?swEntityList',
 			restrict: 'E',
 			scope:{
-				entity: "@",
-				properties: "=",
+				entity:"@",
+				properties:"=",
 				depth:"@",
 				isRegistered:"@",
 				id:"@",
 				debug:"@",
-				template:"@"
+				template:"@",
+				filter:"=",
+				collectionFilter:"="
 			},
 			transclude: false, 
-			controller: function($scope, $element){
-					//this is the default controller if one isn't specified as an argument.
-			},
-			controllerAs:"entityCtrl",
+			controller: "entityCtrl",
+			controllerAs:"ctrl",
 			link: function(scope, element, attrs, parentCtrl){
+				console.log(scope);
 				/**Pushes debug messages to the console if debug is enabled (for frontend guys);
 				 */
 				var debug = function(msg, optional){
@@ -31,8 +32,7 @@ angular.module('slatwalladmin').directive('swEntity', [
 						console.log(msg);
 					}	
 				};
-				/**Sets a variable on parent scope that contains all of our data can be accessed.
-				 */
+				
 				debug("Entity Type:", scope.entity);
 				
 				/**Sets the config properties.
@@ -55,6 +55,25 @@ angular.module('slatwalladmin').directive('swEntity', [
 					collectionConfig.setId(scope.id);
 				}
 				
+				/** finds a filter */
+				if (angular.isDefined(scope.filter)){
+					debug("Adding filter", {});
+					collectionConfig.addFilter(scope.filter.propertyIdentifier,
+  											   scope.filter.value,
+  											   scope.filter.comparisonOperator,
+  											   scope.filter.logicalOperator);
+				}
+				/** finds collection filters and adds to the config */
+				if (angular.isDefined(scope.collectionFilter)){
+					debug("Adding collection filter", {});
+					collectionConfig.addFilter(scope.filter.propertyIdentifier,
+										       scope.filter.displayPropertyIdentifier,
+											   scope.filter.collectionID,
+											   scope.filter.criteria,
+  											   scope.filter.fieldType,
+  											   scope.filter.readOnly);
+				}
+				
 				scope.collectionConfig = collectionConfig.getCollectionConfig();
 				
 				debug("Collection Config:", scope.collectionConfig);
@@ -64,13 +83,12 @@ angular.module('slatwalladmin').directive('swEntity', [
 					debug("Entity data:", data); 
 					if (angular.isDefined(data.pageRecords)){
 						parentCtrl.addEntity(scope.entity, data.pageRecords);
-						console.log("Parent Controller Data: ", parentCtrl);
 						
 						
 					}else{
 						parentCtrl.addEntity(scope.entity, data);
-						console.log("Parent Controller Data: ", parentCtrl);
-						 
+						
+						
 					}
 				});
 			} 
