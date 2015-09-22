@@ -1,6 +1,7 @@
 <!--- a collection of entity objects that demonstrate how to use these complementary tags --->
-<sw:entity-list>
+<sw:entity-list index="Collection">
     <!--- entities="['Product', 'Sku']" properties="[['productID','productName', 'productCode'],['skuID', 'skuCode']]" template="none" debug="on" --->
+    
     <!--- Get order items on an order --->
     <sw:entity entity="Order" properties="['orderID', 'orderNumber', 'calculatedTotal']" id="402828d74f88f020014f8ab0ee960329">
        <ul>
@@ -35,30 +36,28 @@
     
     <!--- all sku records using default columns. Notice the data is used later outside of this entity tag. --->
     <sw:entity entity="Sku" debug="on" filter="{propertyIdentifier: 'skuCode', comparisonOperator: '=', value:'test5-1'}"></sw:entity>
-    
-    <!--- Access data from any of the collection entity objects outside of there respective tags  --->
-    <table class="table table-striped table-bordered table-condensed">
-        <thead>
-            <tr>
-                <td>Sku ID</td>
-                <td>Sku Code</td>
-                <td>Image File</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{Collection.Sku.skuID}}</td>
-                <td>{{Collection.Sku.skuCode}}</td>
-                <td>{{Collection.Sku.imageFile}}</td>
-            </tr>
-        </tbody>
-       <tfoot>
-            <tr>
-                <td colspan="3">example of returning a sku record using default columns with a filter on skuCode set</td>
-            </tr>
-       </tfoot>
-   </table>
-    
+        <!--- Access data from any of the collection entity objects outside of there respective tags  --->
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <td>Sku ID</td>
+                    <td>Sku Code</td>
+                    <td>Image File</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{Collection.Sku.skuID}}</td>
+                    <td>{{Collection.Sku.skuCode}}</td>
+                    <td>{{Collection.Sku.imageFile}}</td>
+                </tr>
+            </tbody>
+           <tfoot>
+                <tr>
+                    <td colspan="3">example of returning a sku record using default columns with a filter on skuCode set</td>
+                </tr>
+           </tfoot>
+       </table>
     <!--- Display Account Data using list, returning all the records. --->
     <sw:entity entity="Account" properties="['accountID', 'firstName', 'lastName', 'primaryAddress.accountAddressID']"> 
         <div ng-repeat="account in Collection.Accounts">
@@ -69,7 +68,6 @@
             </ul>
         </div>
     </sw:entity>
-    
    
 </sw:entity-list>
 
