@@ -61,8 +61,8 @@ gulp.task('watch', function() {
     gulp.watch([config.allTypeScript], 
     [
     	'compile-ts-to5',
-    	'compile-ts'
-		,'gen-ts-refs'
+    	//'compile-ts',
+		'gen-ts-refs'
 		
 		//,'compress'
 	]);
@@ -121,7 +121,8 @@ gulp.task('compile-ts-to5', function () {
                        .pipe(tsc({
                            target: 'ES5',
                            declarationFiles: false,
-                           noExternalResolve: true
+                           noExternalResolve: true,
+                           module:'amd'
                        }));
 
         tsResult.dts.pipe(gulp.dest(config.tsOutputPathto5));
@@ -257,6 +258,7 @@ gulp.task('compress',function(){
 	  config.compilePath + 'es5/modules/ngslatwallmodel.js',
 	  config.compilePath + 'es5/modules/loggingmodule.js',
       config.compilePath + 'es5/modules/slatwalladmin.js',
+      config.compilePath + 'es5/filters/*.js',
       config.compilePath + 'es5/services/*.js',
       config.compilePath + 'es5/controllers/**/*.js',
       config.compilePath + 'es5/directives/**/*.js'
