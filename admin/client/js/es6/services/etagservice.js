@@ -5,17 +5,27 @@ var slatwalladmin;
 (function (slatwalladmin) {
     //service
     class ETagService {
-        constructor() {
+        constructor($window) {
+            this.getETags = () => {
+                return JSON.parse(this.$window.localStorage.getItem('ETags'));
+            };
             this.setETag = (url, value) => {
-                this._etags[url] = value;
+                var ETags = this.getETags();
+                ETags[url] = value;
+                this.$window.localStorage.setItem('ETags', JSON.stringify(ETags));
             };
             this.getETag = (url) => {
-                return this._etags[url];
+                return this.getETags()[url];
             };
-            this._etags = {};
+            this.$window = $window;
+            if (!this.$window.localStorage.getItem('ETags')) {
+                this.$window.localStorage.setItem('ETags', JSON.stringify({}));
+            }
         }
     }
-    ETagService.$inject = [];
+    ETagService.$inject = [
+        '$window'
+    ];
     slatwalladmin.ETagService = ETagService;
     angular.module('slatwalladmin')
         .service('eTagService', ETagService);

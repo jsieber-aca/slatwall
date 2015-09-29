@@ -9,9 +9,10 @@ module slatwalladmin{
     }
 	
 	export class SlatwallInterceptor implements slatwalladmin.IInterceptor{
-		public static $inject = ['$location','$window','$q','$log','$injector','alertService','baseURL','dialogService','eTagService'];
+		public static $inject = ['$cacheFactory','$location','$window','$q','$log','$injector','alertService','baseURL','dialogService','eTagService'];
 		
 		public static Factory(
+            $cacheFactory:ng.ICacheFactory,
             $location:ng.ILocationService,
 			$window:ng.IWindowService ,
 			$q:ng.IQService,
@@ -22,7 +23,7 @@ module slatwalladmin{
 			dialogService:slatwalladmin.IDialogService,
             eTagService
 		) {
-            return new SlatwallInterceptor($location,$window, $q, $log, $injector, alertService,baseURL,dialogService,eTagService);
+            return new SlatwallInterceptor($cacheFactory,$location,$window, $q, $log, $injector, alertService,baseURL,dialogService,eTagService);
         }
         
         public urlParam = null;
@@ -30,6 +31,7 @@ module slatwalladmin{
         public authPrefix = 'Bearer ';
 
         constructor(
+            public $cacheFactory:ng.ICacheFactoryService,
             public $location:ng.ILocationService,
 			public $window:ng.IWindowService, 
 			public $q:ng.IQService, 
@@ -40,6 +42,7 @@ module slatwalladmin{
 			public dialogService:slatwalladmin.IDialogService,
             public eTagService
 		) {
+            this.$cacheFactory = $cacheFactory;
             this.$location = $location;
         	this.$window = $window;
 			this.$q = $q;
@@ -49,6 +52,11 @@ module slatwalladmin{
 			this.baseURL = baseURL;
 			this.dialogService = dialogService;
             this.eTagService = eTagService;
+            if(this.$cacheFactory.get('ETagCache')){
+                this.ETagCache = this.$cacheFactory.get('ETagCache');
+            }else{
+                this.ETagCache = this.$cacheFactory('ETagCache');
+            }
         }
         
 		public request = (config): ng.IPromise<any> => {
@@ -87,9 +95,15 @@ module slatwalladmin{
         }
         public response = (response): ng.IPromise<any> => {
             this.$log.debug('response');
-            if(response.headers().etag){
-                this.eTagService.setETag(response.config.url,response.headers().etag);
+            if(response.status === 200){
+                if(response.headers().etag){
+                    console.log('etag cached');
+                    this.eTagService.setETag(response.config.url,response.headers().etag);
+                    this.ETagCache.put('test', response);
+                    console.log(this.ETagCache.get('ETagCache'););
+                }
             }
+            
 			if(response.data.messages){
                 var alerts = this.alertService.formatMessagesToAlerts(response.data.messages);
                 this.alertService.addAlerts(alerts);
@@ -97,7 +111,11 @@ module slatwalladmin{
 			return response;
         }
         public responseError = (rejection): ng.IPromise<any> => {
-           
+           if (rejection.status === 304){
+               console.log('304');
+               console.log(this.ETagCache.get('test'));
+               return this.ETagCache.get('test');
+           }  
 			this.$log.debug('responseReject');
 			if(angular.isDefined(rejection.status) && rejection.status !== 404 && rejection.status !== 403 && rejection.status !== 401){
 				if(rejection.data && rejection.data.messages){

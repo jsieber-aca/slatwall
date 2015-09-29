@@ -632,19 +632,28 @@ component extends="FW1.framework" {
 		if(isStruct(request.context.apiResponse.content) && request.context.headers.contentType eq 'application/xml'){
 			//response String to xml placeholder
 		}
-		var eTagValue = hash(responseString,'MD5');
+		var eTagValue = '"#hash(responseString,'MD5')#"';
 		response.setHeader('ETag',eTagValue);
+		response.setHeader('Cache-Control','max-age=315360000');
+		
+		savecontent variable="responseOutput"{
+			writeOutput( responseString );
+		}
+
+		response.setContentLength(len(responseOutput));
+		
 		if(
 			structkeyExists(GetHttpRequestData(),'headers') 
 			&& structKeyExists(GetHttpRequestData().headers,'If-None-Match')
 			&& GetHttpRequestData().headers['If-None-Match'] == eTagValue
 		){
-			var pc = getpagecontext().getresponse();
-			pc.getresponse().setstatus(304);	
-			abort;
+			response.setHeader('If-None-Match',eTagValue);
+			structDelete(GetHttpRequestData().headers,'Content-Type');
+			structDelete(GetHttpRequestData().headers,'contenttype');
+			response.setstatus(304);	
 		}
 		
-		writeOutput( responseString );
+		writeOutput(responseOutput);
 	}
 	
 	public void function setupResponse() {

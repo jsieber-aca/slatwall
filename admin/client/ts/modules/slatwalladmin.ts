@@ -61,7 +61,6 @@
                 return input;
             };
         });
-        
         $httpProvider.interceptors.push('slatwallInterceptor');
     
         // route provider configuration

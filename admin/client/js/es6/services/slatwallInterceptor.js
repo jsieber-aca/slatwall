@@ -23,9 +23,8 @@ var slatwalladmin;
                     config.headers.Authorization = 'Bearer ' + this.$window.localStorage.getItem('token');
                 }
                 if (this.eTagService.getETag(config.url)) {
-                    config.headers.ETag = this.eTagService.getETag(config.url);
+                    config.headers['If-None-Match'] = this.eTagService.getETag(config.url);
                 }
-                ;
                 if (config.method == 'GET' && (this.$location.search().slatAction && this.$location.search().slatAction === 'api:main.get')) {
                     config.method = 'POST';
                     config.data = {};
@@ -52,6 +51,9 @@ var slatwalladmin;
             };
             this.response = (response) => {
                 this.$log.debug('response');
+                if (response.headers().etag) {
+                    this.eTagService.setETag(response.config.url, response.headers().etag);
+                }
                 if (response.data.messages) {
                     var alerts = this.alertService.formatMessagesToAlerts(response.data.messages);
                     this.alertService.addAlerts(alerts);
@@ -59,6 +61,8 @@ var slatwalladmin;
                 return response;
             };
             this.responseError = (rejection) => {
+                if (rejection.status === 304)
+                    return rejection;
                 this.$log.debug('responseReject');
                 if (angular.isDefined(rejection.status) && rejection.status !== 404 && rejection.status !== 403 && rejection.status !== 401) {
                     if (rejection.data && rejection.data.messages) {
@@ -108,7 +112,7 @@ var slatwalladmin;
             this.dialogService = dialogService;
             this.eTagService = eTagService;
         }
-        static Factory($window = $location, ng, ILocationService, g, IWindowService, $q, $log, $injector, alertService, baseURL, dialogService, eTagService) {
+        static Factory($location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService) {
             return new SlatwallInterceptor($location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService);
         }
     }

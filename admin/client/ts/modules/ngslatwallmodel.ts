@@ -69,7 +69,7 @@
                 	defaultValues['Audit'] = {
                 	auditID:'',
 										auditType:null,
-									auditDateTime:'1443498344328',
+									auditDateTime:'1443508198695',
 										auditArchiveStartDateTime:null,
 									auditArchiveEndDateTime:null,
 									auditArchiveCreatedDateTime:null,
@@ -126,7 +126,7 @@
                 	accountEmailAddressID:'',
 										emailAddress:null,
 									verifiedFlag:0,
-									verificationCode:'4bec3a37eed5bf999cdc6e3701bcb2d6',
+									verificationCode:'edef827fe7536d5ced8206ce954314ad',
 										remoteID:null,
 									createdDateTime:'',
 										createdByAccountID:null,
@@ -1908,7 +1908,7 @@
 										swprid:'',
 									password:'',
 									passwordConfirm:'',
-									accountPasswordResetID:"70123d6f17164b3917cdd399780e577c",
+									accountPasswordResetID:"8155d0c967f73d8868250771e6bafef0",
 										preProcessDisplayedFlag:0,
 										populatedFlag:0,
 										
@@ -2755,6 +2755,25 @@
 										createdByAccountID:null,
 									modifiedDateTime:'',
 										modifiedByAccountID:null,
+									
+						z:''
+	                };
+                
+                	entities['EmailBounce'] = {"printTemplates":{"persistent":false,"type":"struct","name":"printTemplates"},"rejectedEmailFrom":{"ormtype":"string","name":"rejectedEmailFrom"},"simpleRepresentation":{"persistent":false,"type":"string","name":"simpleRepresentation"},"hibachiErrors":{"persistent":false,"type":"any","name":"hibachiErrors"},"rejectedEmailTo":{"ormtype":"string","name":"rejectedEmailTo"},"persistableErrors":{"persistent":false,"type":"array","name":"persistableErrors"},"rejectedEmailBody":{"ormtype":"text","name":"rejectedEmailBody"},"auditSmartList":{"persistent":false,"type":"any","name":"auditSmartList"},"relatedObject":{"ormtype":"string","name":"relatedObject"},"settingValueFormatted":{"persistent":false,"type":"any","name":"settingValueFormatted"},"rejectedEmailSubject":{"ormtype":"string","name":"rejectedEmailSubject"},"processObjects":{"persistent":false,"type":"struct","name":"processObjects"},"attributeValuesByAttributeCodeStruct":{"persistent":false,"type":"struct","name":"attributeValuesByAttributeCodeStruct"},"emailTemplates":{"persistent":false,"type":"struct","name":"emailTemplates"},"populatedSubProperties":{"persistent":false,"type":"struct","name":"populatedSubProperties"},"rollbackProcessedFlag":{"persistent":false,"type":"boolean","name":"rollbackProcessedFlag"},"rejectedEmailSendTime":{"ormtype":"timestamp","name":"rejectedEmailSendTime"},"newFlag":{"persistent":false,"type":"boolean","name":"newFlag"},"attributeValuesByAttributeIDStruct":{"persistent":false,"type":"struct","name":"attributeValuesByAttributeIDStruct"},"encryptedPropertiesExistFlag":{"persistent":false,"type":"boolean","name":"encryptedPropertiesExistFlag"},"hibachiMessages":{"persistent":false,"type":"any","name":"hibachiMessages"},"validations":{"persistent":false,"type":"struct","name":"validations"},"remoteID":{"ormtype":"string","name":"remoteID"},"createdByAccount":{"persistent":false,"name":"createdByAccount"},"createdDateTime":{"ormtype":"timestamp","hb_populateenabled":false,"name":"createdDateTime"},"announceEvent":{"persistent":false,"type":"boolean","default":true,"name":"announceEvent"},"relatedObjectID":{"ormtype":"string","name":"relatedObjectID"},"assignedAttributeSetSmartList":{"persistent":false,"type":"any","name":"assignedAttributeSetSmartList"},"emailBounceID":{"generator":"uuid","unsavedvalue":"","fieldtype":"id","length":32,"ormtype":"string","default":"","name":"emailBounceID"},"createdByAccountID":{"ormtype":"string","hb_populateenabled":false,"name":"createdByAccountID"},"modifiedByAccount":{"persistent":false,"name":"modifiedByAccount"},"hibachiInstanceApplicationScopeKey":{"PERSISTENT":false,"TYPE":"string","NAME":"hibachiInstanceApplicationScopeKey"}};
+                	entities['EmailBounce'].className = 'EmailBounce';
+                	validations['EmailBounce'] = {"properties":{}};
+                	defaultValues['EmailBounce'] = {
+                	emailBounceID:'',
+										rejectedEmailTo:null,
+									rejectedEmailFrom:null,
+									rejectedEmailSubject:null,
+									rejectedEmailBody:null,
+									rejectedEmailSendTime:null,
+									relatedObject:null,
+									relatedObjectID:null,
+									remoteID:null,
+									createdDateTime:'',
+										createdByAccountID:null,
 									
 						z:''
 	                };

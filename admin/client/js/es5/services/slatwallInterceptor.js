@@ -3,8 +3,9 @@
 var slatwalladmin;
 (function (slatwalladmin) {
     var SlatwallInterceptor = (function () {
-        function SlatwallInterceptor($location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService) {
+        function SlatwallInterceptor($cacheFactory, $location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService) {
             var _this = this;
+            this.$cacheFactory = $cacheFactory;
             this.$location = $location;
             this.$window = $window;
             this.$q = $q;
@@ -52,8 +53,14 @@ var slatwalladmin;
             };
             this.response = function (response) {
                 _this.$log.debug('response');
-                if (response.headers().etag) {
-                    _this.eTagService.setETag(response.config.url, response.headers().etag);
+                if (response.status === 200) {
+                    if (response.headers().etag) {
+                        console.log('etag cached');
+                        _this.eTagService.setETag(response.config.url, response.headers().etag);
+                        _this.ETagCache.put('test', response);
+                        console.log(_this.ETagCache.get('ETagCache'));
+                        ;
+                    }
                 }
                 if (response.data.messages) {
                     var alerts = _this.alertService.formatMessagesToAlerts(response.data.messages);
@@ -62,6 +69,11 @@ var slatwalladmin;
                 return response;
             };
             this.responseError = function (rejection) {
+                if (rejection.status === 304) {
+                    console.log('304');
+                    console.log(_this.ETagCache.get('test'));
+                    return _this.ETagCache.get('test');
+                }
                 _this.$log.debug('responseReject');
                 if (angular.isDefined(rejection.status) && rejection.status !== 404 && rejection.status !== 403 && rejection.status !== 401) {
                     if (rejection.data && rejection.data.messages) {
@@ -101,6 +113,7 @@ var slatwalladmin;
                 }
                 return rejection;
             };
+            this.$cacheFactory = $cacheFactory;
             this.$location = $location;
             this.$window = $window;
             this.$q = $q;
@@ -110,11 +123,17 @@ var slatwalladmin;
             this.baseURL = baseURL;
             this.dialogService = dialogService;
             this.eTagService = eTagService;
+            if (this.$cacheFactory.get('ETagCache')) {
+                this.ETagCache = this.$cacheFactory.get('ETagCache');
+            }
+            else {
+                this.ETagCache = this.$cacheFactory('ETagCache');
+            }
         }
-        SlatwallInterceptor.Factory = function ($location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService) {
-            return new SlatwallInterceptor($location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService);
+        SlatwallInterceptor.Factory = function ($cacheFactory, $location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService) {
+            return new SlatwallInterceptor($cacheFactory, $location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService);
         };
-        SlatwallInterceptor.$inject = ['$location', '$window', '$q', '$log', '$injector', 'alertService', 'baseURL', 'dialogService', 'eTagService'];
+        SlatwallInterceptor.$inject = ['$cacheFactory', '$location', '$window', '$q', '$log', '$injector', 'alertService', 'baseURL', 'dialogService', 'eTagService'];
         return SlatwallInterceptor;
     })();
     slatwalladmin.SlatwallInterceptor = SlatwallInterceptor;
