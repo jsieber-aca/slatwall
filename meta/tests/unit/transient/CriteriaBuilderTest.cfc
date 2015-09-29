@@ -56,7 +56,7 @@ component extends="mxunit.framework.TestCase" {
         Restrictions = new Slatwall.model.transient.collection.CriteriaBuilderRestrictions().init();     //these are aggragates
         Subqueries = new Slatwall.model.transient.collection.CriteriaBuilderSubqueries().init();         //these are subqueries executes in a different context
         Projections = new Slatwall.model.transient.collection.CriteriaBuilderProjections().init();       //these are selections
-        Transformers = new Slatwall.model.transient.collection.CriteriaBuilderTransformers().init();      //these transform the result
+        Transformers = new Slatwall.model.transient.collection.CriteriaBuilderTransformers().init();     //these transform the result
         Order = new Slatwall.model.transient.collection.CriteriaBuilderOrder().init();                   //This is the Order by
         util = new Slatwall.model.transient.collection.CriteriaBuilderUtil();                            //helper methods
         
@@ -157,6 +157,7 @@ component extends="mxunit.framework.TestCase" {
      * Tests retrieving one-to-many data from an entity. (This is specific to my orders)
      */
     public void function criteriaRetrieveToManyPropertiesTestCase(){
+    	writeDump("Gets orderitems on an order object (one-to-many) relationsship.");
         /** Access one-to-many data (orderItems) on SlatwallOrders */
         order = new Slatwall.model.transient.collection.CriteriaBuilder("SlatwallOrder")
             .createAlias("orderItems", "oi")                                        
@@ -172,8 +173,30 @@ component extends="mxunit.framework.TestCase" {
                             .add(Projections.property("a.firstName"     ), "firstName"));
         order.setResultTransformer(order.Alias_To_Entity_Map);
         var orders = order.list();
-        writeDump(var=orders);//<--show the results////writeDump(q.get());//gets unique result only 
+        writeDump(var=orders);
         writeDump(orders.toString()); 
+    }
+    /**
+     *Tests retrieving many-to-many data from an entity by the many-to-many property _eq xxx. PromotionCodes on Order Entity
+     */
+     public void function criteriaRetrieveManyToManyPropertiesTestCase(){
+        writeDump("Gets promotionCodes on an Order object (many-to-many relationsship)");
+        /** Access one-to-many data (orderItems) on SlatwallOrders */
+        order = new Slatwall.model.transient.collection.CriteriaBuilder("SlatwallOrder")
+            .createAlias("promotionCodes", "pc")
+                .add(Restrictions._eq("orderID", "402881864f4dd3d9014f50c4c1060030") )
+                .add(Restrictions._eq("pc.promotionCode", "promo50") )          
+                    .setProjection(     
+                        Projections.projectionList()
+                            .add(Projections.property("currencyCode"    ), "currencyCode")
+                            .add(Projections.property("pc.promotionCodeID"  ), "promotionCodeID")
+                            .add(Projections.property("pc.promotionCode"        ), "promotionCode")
+                            .add(Projections.property("pc.startDateTime"     ), "startDate")
+                            .add(Projections.property("pc.endDateTime"     ), "endDate")
+                            .add(Projections.property("pc.maximumUseCount"     ), "maximumUseCount"));
+        order.setResultTransformer(order.Alias_To_Entity_Map);
+        var orders = order.list();
+        writeDump(var=orders); 
     }
     /**
      * Tests (case-insensitive) like%
