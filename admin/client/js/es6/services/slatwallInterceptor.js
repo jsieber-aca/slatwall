@@ -3,7 +3,8 @@
 var slatwalladmin;
 (function (slatwalladmin) {
     class SlatwallInterceptor {
-        constructor($window, $q, $log, $injector, alertService, baseURL, dialogService) {
+        constructor($location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService) {
+            this.$location = $location;
             this.$window = $window;
             this.$q = $q;
             this.$log = $log;
@@ -11,16 +12,21 @@ var slatwalladmin;
             this.alertService = alertService;
             this.baseURL = baseURL;
             this.dialogService = dialogService;
+            this.eTagService = eTagService;
             this.urlParam = null;
             this.authHeader = 'Authorization';
             this.authPrefix = 'Bearer ';
             this.request = (config) => {
                 this.$log.debug('request');
-                if (config.method == 'GET' && (config.url.indexOf('.html') == -1) && config.url.indexOf('.json') == -1) {
-                    config.headers = config.headers || {};
-                    if (this.$window.localStorage.getItem('token') && this.$window.localStorage.getItem('token') !== "undefined") {
-                        config.headers.Authorization = 'Bearer ' + this.$window.localStorage.getItem('token');
-                    }
+                config.headers = config.headers || {};
+                if (this.$window.localStorage.getItem('token') && this.$window.localStorage.getItem('token') !== "undefined") {
+                    config.headers.Authorization = 'Bearer ' + this.$window.localStorage.getItem('token');
+                }
+                if (this.eTagService.getETag(config.url)) {
+                    config.headers.ETag = this.eTagService.getETag(config.url);
+                }
+                ;
+                if (config.method == 'GET' && (this.$location.search().slatAction && this.$location.search().slatAction === 'api:main.get')) {
                     config.method = 'POST';
                     config.data = {};
                     var data = {};
@@ -92,6 +98,7 @@ var slatwalladmin;
                 }
                 return rejection;
             };
+            this.$location = $location;
             this.$window = $window;
             this.$q = $q;
             this.$log = $log;
@@ -99,12 +106,13 @@ var slatwalladmin;
             this.alertService = alertService;
             this.baseURL = baseURL;
             this.dialogService = dialogService;
+            this.eTagService = eTagService;
         }
-        static Factory($window, $q, $log, $injector, alertService, baseURL, dialogService) {
-            return new SlatwallInterceptor($window, $q, $log, $injector, alertService, baseURL, dialogService);
+        static Factory($window = $location, ng, ILocationService, g, IWindowService, $q, $log, $injector, alertService, baseURL, dialogService, eTagService) {
+            return new SlatwallInterceptor($location, $window, $q, $log, $injector, alertService, baseURL, dialogService, eTagService);
         }
     }
-    SlatwallInterceptor.$inject = ['$window', '$q', '$log', '$injector', 'alertService', 'baseURL', 'dialogService'];
+    SlatwallInterceptor.$inject = ['$location', '$window', '$q', '$log', '$injector', 'alertService', 'baseURL', 'dialogService', 'eTagService'];
     slatwalladmin.SlatwallInterceptor = SlatwallInterceptor;
     angular.module('slatwalladmin').service('slatwallInterceptor', SlatwallInterceptor);
 })(slatwalladmin || (slatwalladmin = {}));

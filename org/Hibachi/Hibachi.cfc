@@ -610,7 +610,7 @@ component extends="FW1.framework" {
 		var context = getPageContext();
 		context.getOut().clearBuffer();
 		var response = context.getResponse();
-		for(header in request.context.headers){
+		for(var header in request.context.headers){
 			response.setHeader(header,request.context.headers[header]);
 		}
 		
@@ -632,6 +632,18 @@ component extends="FW1.framework" {
 		if(isStruct(request.context.apiResponse.content) && request.context.headers.contentType eq 'application/xml'){
 			//response String to xml placeholder
 		}
+		var eTagValue = hash(responseString,'MD5');
+		response.setHeader('ETag',eTagValue);
+		if(
+			structkeyExists(GetHttpRequestData(),'headers') 
+			&& structKeyExists(GetHttpRequestData().headers,'If-None-Match')
+			&& GetHttpRequestData().headers['If-None-Match'] == eTagValue
+		){
+			var pc = getpagecontext().getresponse();
+			pc.getresponse().setstatus(304);	
+			abort;
+		}
+		
 		writeOutput( responseString );
 	}
 	

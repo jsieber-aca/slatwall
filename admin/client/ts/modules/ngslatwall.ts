@@ -380,12 +380,10 @@ module ngSlatwall {
                 return this._resourceBundle[locale];
             }
             
-            var urlString = this.getConfig().baseURL+'/index.cfm/?slatAction=api:main.getResourceBundle&instantiationKey='+this.getConfig().instantiationKey;
+            var urlString = this.getConfig().baseURL+'/index.cfm/?slatAction=api:main.getResourceBundle&instantiationKey='+this.getConfig().instantiationKey+'&locale='+locale;
             //var urlString = this.getConfig().baseURL+'/config/resourceBundles/'+locale+'.json?instantiationKey='+this.getConfig().instantiationKey;
-            var params = {
-                locale:locale
-            };
-            return $http.get(urlString,{params:params}).success((response) => {
+           
+            return $http.get(urlString).success((response) => {
                 this._resourceBundle[locale] = response.data;
                 //deferred.resolve(response);
             }).error((response) => {

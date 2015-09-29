@@ -338,12 +338,9 @@ var ngSlatwall;
                 if (_this._resourceBundle[locale]) {
                     return _this._resourceBundle[locale];
                 }
-                var urlString = _this.getConfig().baseURL + '/index.cfm/?slatAction=api:main.getResourceBundle&instantiationKey=' + _this.getConfig().instantiationKey;
+                var urlString = _this.getConfig().baseURL + '/index.cfm/?slatAction=api:main.getResourceBundle&instantiationKey=' + _this.getConfig().instantiationKey + '&locale=' + locale;
                 //var urlString = this.getConfig().baseURL+'/config/resourceBundles/'+locale+'.json?instantiationKey='+this.getConfig().instantiationKey;
-                var params = {
-                    locale: locale
-                };
-                return $http.get(urlString, { params: params }).success(function (response) {
+                return $http.get(urlString).success(function (response) {
                     _this._resourceBundle[locale] = response.data;
                     //deferred.resolve(response);
                 }).error(function (response) {
