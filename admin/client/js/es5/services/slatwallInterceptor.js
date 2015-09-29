@@ -23,8 +23,6 @@ var slatwalladmin;
                 if (_this.$window.localStorage.getItem('token') && _this.$window.localStorage.getItem('token') !== "undefined") {
                     config.headers.Authorization = 'Bearer ' + _this.$window.localStorage.getItem('token');
                 }
-                console.log(_this.eTagService.getETag());
-                console.log(_this.eTagService.getETag(config.url));
                 if (_this.eTagService.getETag(config.url)) {
                     config.headers['If-None-Match'] = _this.eTagService.getETag(config.url);
                 }
@@ -54,16 +52,9 @@ var slatwalladmin;
             };
             this.response = function (response) {
                 _this.$log.debug('response');
-                console.log(response);
-                //console.log(headersGetter());
-                console.log(response.headers().etag);
                 if (response.headers().etag) {
                     _this.eTagService.setETag(response.config.url, response.headers().etag);
                 }
-                console.log(_this.eTagService.getETags());
-                //            if(this.eTagService.getETag(config.url)){
-                //                config.headers.ETag = this.eTagService.getETag(config.url);    
-                //            }
                 if (response.data.messages) {
                     var alerts = _this.alertService.formatMessagesToAlerts(response.data.messages);
                     _this.alertService.addAlerts(alerts);

@@ -58,8 +58,6 @@ module slatwalladmin{
                 
                 config.headers.Authorization = 'Bearer ' + this.$window.localStorage.getItem('token');
             }
-            console.log(this.eTagService.getETag());
-            console.log(this.eTagService.getETag(config.url));
             if(this.eTagService.getETag(config.url)){
                 config.headers['If-None-Match'] = this.eTagService.getETag(config.url);    
             }
@@ -89,16 +87,9 @@ module slatwalladmin{
         }
         public response = (response): ng.IPromise<any> => {
             this.$log.debug('response');
-            console.log(response);
-            //console.log(headersGetter());
-            console.log(response.headers().etag);
             if(response.headers().etag){
                 this.eTagService.setETag(response.config.url,response.headers().etag);
             }
-            console.log(this.eTagService.getETags());
-//            if(this.eTagService.getETag(config.url)){
-//                config.headers.ETag = this.eTagService.getETag(config.url);    
-//            }
 			if(response.data.messages){
                 var alerts = this.alertService.formatMessagesToAlerts(response.data.messages);
                 this.alertService.addAlerts(alerts);
