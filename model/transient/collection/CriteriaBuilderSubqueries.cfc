@@ -9,14 +9,14 @@ component  output="true" accessors="true" displayname="CriteriaBuilderSubqueries
 	property name="LEFT_JOIN" type="numeric" default="1";   
 	
 	/** java objects */
-	property name="Projection"   type="any";
-	property name="Subqueries"   type="any";
+	property name="detachedCriteria"   type="any";
+	property name="projection"         type="any";
+	property name="subqueries"         type="any";
 	
 	public CriteriaBuilderSubqueries function init(){
 		//Gets a list of all restrictions methods from hibernate
-		setProjection(createObject("java", "org.hibernate.criterion.Projections"));
-		subqueries = createObject("java", "org.hibernate.criterion.Subqueries");
-		
+		projection       = createObject("java", "org.hibernate.criterion.Projections");
+		subqueries       = createObject("java", "org.hibernate.criterion.Subqueries");
 		return this;
 	}
 	
@@ -26,8 +26,11 @@ component  output="true" accessors="true" displayname="CriteriaBuilderSubqueries
     public any function _eqAll(required any obj, required any detchedCriteria){
     	return subqueries.eqAll(arguments.obj, arguments.detchedCriteria);
     }
-    public any function _exists(required any detchedCriteria){
-    	return subqueries.exists(arguments.detchedCriteria);
+    public any function exists(){
+    	return subqueries.exists(detachedCriteria.getNativeObject());
+    }
+    public any function notExists(){
+        return getSubqueries().notExists(detachedCriteria.getNativeObject());
     }
     public any function _ge(required any obj, required any detchedCriteria){
     	return subqueries.ge(arguments.obj, arguments.detchedCriteria);
@@ -71,9 +74,6 @@ component  output="true" accessors="true" displayname="CriteriaBuilderSubqueries
     public any function _ne(required any obj, required any detchedCriteria){
     	return subqueries.ne(arguments.obj, arguments.detchedCriteria);
     }
-    public any function _notExists(required any detchedCriteria){
-    	return subqueries.notExists(arguments.detchedCriteria);
-    }
     public any function _notIn(required any obj, required any detchedCriteria){
     	return subqueries.notIn(arguments.obj, arguments.detchedCriteria);
     }
@@ -103,7 +103,6 @@ component  output="true" accessors="true" displayname="CriteriaBuilderSubqueries
     }
     public any function _propertyIn(required any str, required any detchedCriteria){
     	return subqueries.propertyIn(arguments.str, arguments.detchedCriteria);
-    	//return this;
     }
     public any function _propertyLe(required any str, required any detchedCriteria){
     	return subqueries.propertyLe(arguments.str, arguments.detchedCriteria);

@@ -52,14 +52,13 @@ component extends="mxunit.framework.TestCase" {
     /** These tests all operate on the account entity */
 	public void function setup(){
 		
-		criteria = new Slatwall.model.transient.collection.CriteriaBuilder("SlatwallAccount");
+		Criteria = new Slatwall.model.transient.collection.CriteriaBuilder("SlatwallAccount");
         Restrictions = new Slatwall.model.transient.collection.CriteriaBuilderRestrictions().init();     //these are aggragates
-        Subqueries = new Slatwall.model.transient.collection.CriteriaBuilderSubqueries().init();         //these are subqueries executes in a different context
         Projections = new Slatwall.model.transient.collection.CriteriaBuilderProjections().init();       //these are selections
         Transformers = new Slatwall.model.transient.collection.CriteriaBuilderTransformers().init();     //these transform the result
         Order = new Slatwall.model.transient.collection.CriteriaBuilderOrder().init();                   //This is the Order by
         util = new Slatwall.model.transient.collection.CriteriaBuilderUtil();                            //helper methods
-        
+                     
 	}
 	/**
 	 *Should return an array that contains three columns in each array element.
@@ -197,7 +196,39 @@ component extends="mxunit.framework.TestCase" {
         order.setResultTransformer(order.Alias_To_Entity_Map);
         var orders = order.list();
         writeDump(var=orders); 
+       
+        
+        
     }
+    
+    public void function criteriaRetrieveSimpleDetachedCriteria(){
+        writeDump("Simple Detached Criteria Test on Account");
+        
+        
+        //This is a subQuery
+                       
+        var detachedOrderCriteria = new Slatwall.model.transient.collection.DetachedCriteria("SlatwallOrder", "order")
+                .createAlias("order.account", "a")
+                .add(Restrictions._eq("a.accountID", '402828b24f606f92014f650a289a0022'));
+       
+       var squeries = new Slatwall.model.transient.collection.CriteriaBuilderSubqueries().init();
+           squeries.setDetachedCriteria(detachedOrderCriteria);
+       var result = squeries.notExists(); 
+       writeDump(result.toString());
+       // writeDump(var=detachedOrderCriteria.list(), top=2); 
+       var criteria = new Slatwall.model.transient.collection.CriteriaBuilder("SlatwallAccount", "account");
+        
+       criteria.setProjection(Projections.projectionList()
+                .add( Projections.property("accountID"), "accountID")
+                .add( Projections.property("firstName"), "firstName")
+                .add( Projections.property("lastName"), "lastName") )
+                .add( Restrictions._ilike("this.firstName", "i%")   );
+                //.add( result );
+                //.add( squeries.Exists() );
+        criteria.setResultTransformer(criteria.Alias_to_entity_map);
+        writeDump(criteria.list());
+    }
+    
     /**
      * Tests (case-insensitive) like%
      */
