@@ -107,7 +107,7 @@ gulp.task('compile-ts', function () {
                            sourceMap:true
                        }));
 
-        tsResult.dts.pipe(gulp.dest(config.tsOutputPath));
+        tsResult.dts.pipe(gulp.dest(config.tsOutputPath)).pipe(ngAnnotate());
         return tsResult.js
         				
                         .pipe(sourcemaps.write('.'))
