@@ -14,7 +14,7 @@ module slatwalladmin{
 		
 	}
 	
-	export class WorkflowConditionService extends BaseService{
+	export class WorkflowConditionService extends hibachi.services.BaseService{
 		public static $inject = ["$log","$slatwall","alertService"];
 		public constructor(private $log:ng.ILogService,$slatwall,alertService:slatwalladmin.IAlertService){
 			super();

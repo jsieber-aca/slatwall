@@ -1,6 +1,6 @@
 var slatwalladmin;
 (function (slatwalladmin) {
-    class MetaDataService extends slatwalladmin.BaseService {
+    class MetaDataService extends hibachi.services.BaseService {
         constructor($filter, $log) {
             super();
             this.$filter = $filter;

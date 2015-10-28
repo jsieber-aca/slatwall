@@ -2,7 +2,7 @@
 /// <reference path='../../../../client/typings/tsd.d.ts' />
 
 module slatwalladmin{
-    export class ProductBundleService extends BaseService{
+    export class ProductBundleService extends hibachi.services.BaseService{
         public static $inject = [
             '$log','$slatwall','utilityService'
         ];
@@ -79,6 +79,6 @@ module slatwalladmin{
             return productBundelGroupFilters;
         }
     }
-    angular.module('slatwalladmin').service('productBundleService',ProductBundleService);
+    getModule().service('productBundleService',ProductBundleService);
 }
 

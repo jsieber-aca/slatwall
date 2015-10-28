@@ -84,9 +84,9 @@ var slatwalladmin;
             '$log', '$slatwall', 'utilityService'
         ];
         return ProductBundleService;
-    })(slatwalladmin.BaseService);
+    })(hibachi.services.BaseService);
     slatwalladmin.ProductBundleService = ProductBundleService;
-    angular.module('slatwalladmin').service('productBundleService', ProductBundleService);
+    slatwalladmin.getModule().service('productBundleService', ProductBundleService);
 })(slatwalladmin || (slatwalladmin = {}));
 
 //# sourceMappingURL=../services/productbundleservice.js.map

@@ -1,12 +1,12 @@
 /// <reference path='../../../../client/typings/slatwallTypescript.d.ts' />
 /// <reference path='../../../../client/typings/tsd.d.ts' />
 
-module slatwalladmin{
+module hibachi.services{
     export interface IDialogService {
         get (): PageDialog[];
     }
     
-    export class DialogService extends BaseService{
+    export class DialogService extends hibachi.services.BaseService{
         public static $inject = [
             'partialsPath'
         ];    
@@ -46,6 +46,6 @@ module slatwalladmin{
             return this._pageDialogs[this._pageDialogs.length -1];
         };
     }
-    angular.module('slatwalladmin').service('dialogService', DialogService);
+    getModule().service('dialogService', DialogService);
 }
 

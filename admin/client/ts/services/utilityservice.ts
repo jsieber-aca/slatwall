@@ -3,7 +3,7 @@
 /*services return promises which can be handled uniquely based on success or failure by the controller*/
 module slatwalladmin{
     
-    export class UtilityService extends BaseService{
+    export class UtilityService extends hibachi.services.BaseService{
         
         constructor(){
             super();
@@ -81,7 +81,7 @@ module slatwalladmin{
             if(listArray.length){
                 return substring + delimiter + list;
             }else{
-                return substring
+                return substring;
             }
         }
         

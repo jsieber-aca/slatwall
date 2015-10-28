@@ -1,6 +1,6 @@
 /// <reference path='../../../../client/typings/slatwallTypescript.d.ts' />
 /// <reference path='../../../../client/typings/tsd.d.ts' />
-module slatwalladmin{
+module hibachi.services{
     export class Form implements ng.IFormController{
         [name: string]: any;
         public name:string;
@@ -33,7 +33,7 @@ module slatwalladmin{
         }    
     }
     
-    export class FormService implements BaseService{
+    export class FormService implements hibachi.services.BaseService{
         public static $inject = ['$log'];
         private _forms;
         private _pristinePropertyValue;
@@ -114,6 +114,6 @@ module slatwalladmin{
             form.$setUntouched(); 
         }
     }  
-    angular.module('slatwalladmin')
+    getModule()
     .service('formService',FormService); 
 }

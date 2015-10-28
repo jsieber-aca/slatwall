@@ -18,7 +18,7 @@ var slatwalladmin;
         }
     }
     slatwalladmin.workflowConditionGroupItem = workflowConditionGroupItem;
-    class WorkflowConditionService extends slatwalladmin.BaseService {
+    class WorkflowConditionService extends hibachi.services.BaseService {
         constructor($log, $slatwall, alertService) {
             super();
             this.$log = $log;

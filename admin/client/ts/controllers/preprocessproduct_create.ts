@@ -1,4 +1,4 @@
-module slatwalladmin {
+module hibachi.controllers {
         'use strict';
 	
 	
@@ -51,6 +51,6 @@ module slatwalladmin {
         
 	}
 	
-	angular.module('slatwalladmin').controller('preprocessproduct_create', ProductCreateController);
+	getModule().controller('preprocessproduct_create', ProductCreateController);
 
 }

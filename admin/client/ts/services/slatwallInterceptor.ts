@@ -140,5 +140,5 @@ module slatwalladmin{
         }
 		
 	}
-	angular.module('slatwalladmin').service('slatwallInterceptor', SlatwallInterceptor);
+	getModule().service('slatwallInterceptor', SlatwallInterceptor);
 }

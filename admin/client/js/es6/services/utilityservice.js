@@ -3,7 +3,7 @@
 /*services return promises which can be handled uniquely based on success or failure by the controller*/
 var slatwalladmin;
 (function (slatwalladmin) {
-    class UtilityService extends slatwalladmin.BaseService {
+    class UtilityService extends hibachi.services.BaseService {
         constructor() {
             super();
             this.getQueryParamsFromUrl = (url) => {

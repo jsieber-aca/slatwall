@@ -1,6 +1,6 @@
 /*services return promises which can be handled uniquely based on success or failure by the controller*/
 module slatwalladmin{
-    export class SelectionService extends BaseService{
+    export class SelectionService extends hibachi.services.BaseService{
         private _selection ={};
         constructor(){
             super();   

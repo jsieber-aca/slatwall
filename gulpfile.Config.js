@@ -27,7 +27,55 @@ var GulpConfig = (function () {
         
         //this.es5Path = 'admin/client/js/es5/**/*.js',
         //this.propertiesPath = 'config/resourceBundles/*.properties',
+        
+        //angular builder info
+        this.angularbuilderconfig = {
+        	seed: [
+		        "./index.html.ejs"
+		    ],
+		    options: {
+		        parseExclude: [
+		            "/libs/",
+		            /\/libs-optional\/[^\/]+\/includes\//i
+		        ],
+		        requiredFiles: [],
+		        requiredLibs: [
+		            "/libs/"
+		        ],
+		        filePriority: [
+		            "/libs/jquery/jquery.js",
+		            "/libs/lodash/lodash.js",
+		            "/libs/angular/angular.js",
+		            "/libs/jquery/",
+		            "/libs/lodash/",
+		            "/libs/angular/"
+		        ],
+		        optionalLibs: [
+		            "/libs-optional/"
+		        ],
+		        optionalLibsInclude: [
+		            /\/libs-optional\/[^\/]+\/includes\/[^\/]+\.js/i
+		        ],
+		        globalDependencies: [
+		            "Restangular"
+		        ],
+		        appModule: "myAngularApp",
+		        globalModules: [
+		            "ngAnimate",
+		            "ui.router",
+		            "ui.bootstrap",
+		            "restangular"
+		        ],
+		        verbose: true,
+		        debug: false
+		    }
+		};
     }
     return GulpConfig;
 })();
 module.exports = GulpConfig;
+
+var config = (function(){
+	
+	
+});

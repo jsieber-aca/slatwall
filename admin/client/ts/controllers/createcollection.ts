@@ -1,5 +1,6 @@
-'use strict';
-angular.module('slatwalladmin')
+module hibachi.controllers{
+    'use strict';
+    getModule()
     .controller('createCollection', [
         '$scope', '$log', '$timeout', '$slatwall', 'collectionService', 'formService',
         'metadataService', 'paginationService','dialogService','observerService', 'selectionService',
@@ -211,3 +212,4 @@ angular.module('slatwalladmin')
             }
         }
     ]);
+}

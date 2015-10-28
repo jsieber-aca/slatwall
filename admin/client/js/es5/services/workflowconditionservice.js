@@ -52,7 +52,7 @@ var slatwalladmin;
         }
         WorkflowConditionService.$inject = ["$log", "$slatwall", "alertService"];
         return WorkflowConditionService;
-    })(slatwalladmin.BaseService);
+    })(hibachi.services.BaseService);
     slatwalladmin.WorkflowConditionService = WorkflowConditionService;
     angular.module('slatwalladmin').service('workflowConditionService', WorkflowConditionService);
 })(slatwalladmin || (slatwalladmin = {}));

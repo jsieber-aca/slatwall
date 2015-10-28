@@ -1,7 +1,7 @@
 /// <reference path="../../../../client/typings/tsd.d.ts" />
 /// <reference path="../../../../client/typings/slatwallTypeScript.d.ts" />
 
-module logger {
+module logger.services {
     /*<------------------------------------------------------------------------
       Create an interface for the http configuration that we use below. this
       makes it so we get type protection on errors for the object literal.
@@ -20,9 +20,9 @@ module logger {
       function notation - but this compiles down to the function we want.
       <------------------------------------------------------------------------*/
     export class ExceptionHandler {
-        private static injector: ng.auto.IInjectorService;
+        //private static injector: ng.auto.IInjectorService;
         
-        /** returning the ExceptionHandler bind here removes the circular dependancy 
+        /** returning the ExceptionHandler bind here removes the circular dependancy  
             that you would get from having exceptionHandler require $http <-- exceptionHandler --> $http
          */
         constructor(injector: ng.auto.IInjectorService) {
@@ -68,7 +68,7 @@ module logger {
     }//<--end class
     //let angular know about our class. notive we pass in the $injector and instantiate the class in one go
     //again using the fat arrow for scope.
-    angular.module('logger', []).factory('$exceptionHandler', ['$injector', ($injector) => new logger.ExceptionHandler($injector)]);
+    getModule().factory('$exceptionHandler', ['$injector', ($injector) => new ExceptionHandler($injector)]);
 }//<--end module
 
 

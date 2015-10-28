@@ -1,12 +1,15 @@
 /// <reference path='../../../../client/typings/slatwallTypescript.d.ts' />
 /// <reference path='../../../../client/typings/tsd.d.ts' />
-var slatwalladmin;
-(function (slatwalladmin) {
-    class BaseService {
-        constructor() {
+var hibachi;
+(function (hibachi) {
+    var services;
+    (function (services) {
+        class BaseService {
+            constructor() {
+            }
         }
-    }
-    slatwalladmin.BaseService = BaseService;
-})(slatwalladmin || (slatwalladmin = {}));
+        services.BaseService = BaseService;
+    })(services = hibachi.services || (hibachi.services = {}));
+})(hibachi || (hibachi = {}));
 
 //# sourceMappingURL=../services/baseservice.js.map

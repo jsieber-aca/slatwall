@@ -2,7 +2,7 @@
 /// <reference path='../../../../client/typings/tsd.d.ts' />
 var slatwalladmin;
 (function (slatwalladmin) {
-    class DialogService extends slatwalladmin.BaseService {
+    class DialogService extends hibachi.services.BaseService {
         constructor(partialsPath) {
             super();
             this.partialsPath = partialsPath;

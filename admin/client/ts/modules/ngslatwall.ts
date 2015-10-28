@@ -1,9 +1,11 @@
 /// <reference path="../../../../client/typings/tsd.d.ts" />
 /// <reference path="../../../../client/typings/slatwallTypeScript.d.ts" />
-((): void => {
-     var ngSlatwall = angular.module('ngSlatwall',['hibachi'])
-})();
 module ngSlatwall {
+    var ngSlatwall = angular.module('ngSlatwall',['hibachi'])
+    export var getModule: () => ng.IModule = () =>{
+        return angular.module('ngSlatwall');    
+    }
+    
     export class SlatwallService{
         public _resourceBundle = {};
         public _resourceBundleLastModified = '';
@@ -674,7 +676,7 @@ module ngSlatwall {
             this._config = config;
         }
     }
-    angular.module('ngSlatwall').provider('$slatwall',$Slatwall);
+    getModule().provider('$slatwall',$Slatwall);
    
 }
         

@@ -1,4 +1,5 @@
-angular.module('slatwalladmin')
+module hibachi.filters{
+    getModule()
     .filter('percentage', ['$window', function ($window) {
         return function (input, decimals, suffix) {
             decimals = angular.isNumber(decimals)? decimals :  3;
@@ -9,3 +10,4 @@ angular.module('slatwalladmin')
             return Math.round(input * Math.pow(10, decimals + 2))/Math.pow(10, decimals) + suffix
         };
     }]);
+}

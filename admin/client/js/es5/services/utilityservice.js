@@ -241,7 +241,7 @@ var slatwalladmin;
             };
         }
         return UtilityService;
-    })(slatwalladmin.BaseService);
+    })(hibachi.services.BaseService);
     slatwalladmin.UtilityService = UtilityService;
     angular.module('hibachi').service('utilityService', UtilityService);
 })(slatwalladmin || (slatwalladmin = {}));

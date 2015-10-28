@@ -6,8 +6,8 @@
  * Manages all events inside the application
  *
  */
-module slatwalladmin{
-    export class ObserverService extends BaseService{
+module hibachi.services{
+    export class ObserverService extends hibachi.services.BaseService{
         private observers;
         public static $inject = ['utilityService'];
         constructor(private utilityService:slatwalladmin.UtilityService){
@@ -104,5 +104,6 @@ module slatwalladmin{
           }
         }
     }
-    angular.module('hibachi').service('observerService', ObserverService);
+    getModule().service('observerService', ObserverService);
+    
 }

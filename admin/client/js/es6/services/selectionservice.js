@@ -1,7 +1,7 @@
 /*services return promises which can be handled uniquely based on success or failure by the controller*/
 var slatwalladmin;
 (function (slatwalladmin) {
-    class SelectionService extends slatwalladmin.BaseService {
+    class SelectionService extends hibachi.services.BaseService {
         constructor() {
             super();
             this._selection = {};

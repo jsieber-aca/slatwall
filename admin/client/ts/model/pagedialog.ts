@@ -1,6 +1,6 @@
 /// <reference path='../../../../client/typings/slatwallTypescript.d.ts' />
 /// <reference path='../../../../client/typings/tsd.d.ts' />
-module slatwalladmin{
+module hibachi.model{
 
     //model
     export class PageDialog {

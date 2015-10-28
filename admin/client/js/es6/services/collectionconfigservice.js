@@ -88,6 +88,12 @@ var slatwalladmin;
                 this.pageShow = jsonCollection.pageShow;
                 this.allRecords = jsonCollection.allRecords;
             };
+            this.loadFilterGroups = (filterGroupsConfig = [{ filterGroup: [] }]) => {
+                this.filterGroups = filterGroupsConfig;
+            };
+            this.loadColumns = (columns) => {
+                this.columns = columns;
+            };
             this.getCollectionConfig = () => {
                 return {
                     baseEntityAlias: this.baseEntityAlias,
@@ -100,7 +106,7 @@ var slatwalladmin;
                     pageShow: this.pageShow,
                     keywords: this.keywords,
                     defaultColumns: (!this.columns || !this.columns.length),
-                    allRecords: this.allRecords
+                    allRecords: this.allRecords,
                 };
             };
             this.getEntityName = () => {

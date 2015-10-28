@@ -1,9 +1,15 @@
 /// <reference path="../../../../client/typings/tsd.d.ts" />
 /// <reference path="../../../../client/typings/slatwallTypeScript.d.ts" />
 
-((): void => {
+module slatwalladmin {
     
     var app = angular.module('slatwalladmin', ['hibachi','ngSlatwall','ngSlatwallModel','ui.bootstrap','ngAnimate','ngRoute','ngSanitize','ngCkeditor']);
+    
+    
+    export var getModule: () => ng.IModule = () =>{
+        return angular.module('slatwalladmin');    
+    }
+    
     app.config(
         ["$provide",'$logProvider','$filterProvider','$httpProvider','$routeProvider','$injector','$locationProvider','datepickerConfig', 'datepickerPopupConfig',
         ($provide, $logProvider,$filterProvider,$httpProvider,$routeProvider,$injector,$locationProvider,datepickerConfig, datepickerPopupConfig) =>
@@ -158,4 +164,4 @@
             
             return filterStub;        
     }]);
-})();
+};

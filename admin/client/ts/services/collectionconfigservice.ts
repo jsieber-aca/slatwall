@@ -1,4 +1,4 @@
-module slatwalladmin{
+module hibachi.services{
 
     class Column{
         constructor(
@@ -493,6 +493,6 @@ module slatwalladmin{
         };
 
     }
-    angular.module('slatwalladmin')
+    getModule()
         .factory('collectionConfigService', ['$slatwall','utilityService', ($slatwall: any,utilityService) => new CollectionConfig($slatwall,utilityService)]);
 }

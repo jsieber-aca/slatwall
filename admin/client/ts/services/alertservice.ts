@@ -2,7 +2,7 @@
 /// <reference path='../../../../client/typings/tsd.d.ts' />
 
 /*services return promises which can be handled uniquely based on success or failure by the controller*/
-module slatwalladmin{
+module hibachi.services{
     //service
     
     export interface IAlertService {
@@ -84,7 +84,7 @@ module slatwalladmin{
             this.alerts.splice(0,1);
         }
     }  
-    angular.module('slatwalladmin')
+    getModule()
     .service('alertService',AlertService); 
 }
     

@@ -164,6 +164,6 @@ module slatwalladmin {
 		}
 	}
 	
-	angular.module('slatwalladmin').controller('preprocessorderitem_addorderitemgiftrecipient', OrderItemGiftRecipientControl);
+	getModule().controller('preprocessorderitem_addorderitemgiftrecipient', OrderItemGiftRecipientControl);
 
 }

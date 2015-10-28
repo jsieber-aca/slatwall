@@ -160,7 +160,7 @@ var slatwalladmin;
     }
     Pagination.$inject = [];
     slatwalladmin.Pagination = Pagination;
-    class PaginationService extends slatwalladmin.BaseService {
+    class PaginationService extends hibachi.services.BaseService {
         constructor(utilityService) {
             super();
             this.utilityService = utilityService;

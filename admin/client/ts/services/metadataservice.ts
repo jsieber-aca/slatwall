@@ -1,5 +1,5 @@
-module slatwalladmin{
-	export class MetaDataService extends BaseService{
+module hibachi.services{
+	export class MetaDataService extends hibachi.services.BaseService{
 		private _propertiesList;
 		private _orderBy;
 		public static $inject = [
@@ -105,5 +105,5 @@ module slatwalladmin{
 			return this._orderBy(propertiesList,predicate,reverse);
 		}
 	}
-	angular.module('slatwalladmin').service('metadataService',MetaDataService);
+	getModule().service('metadataService',MetaDataService);
 }

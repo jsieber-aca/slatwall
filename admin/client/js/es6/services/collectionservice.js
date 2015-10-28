@@ -3,7 +3,7 @@
 /*collection service is used to maintain the state of the ui*/
 var slatwalladmin;
 (function (slatwalladmin) {
-    class CollectionService extends slatwalladmin.BaseService {
+    class CollectionService extends hibachi.services.BaseService {
         constructor($filter, $log) {
             super();
             this.$filter = $filter;

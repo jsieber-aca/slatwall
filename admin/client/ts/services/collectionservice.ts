@@ -1,8 +1,8 @@
 /// <reference path='../../../../client/typings/slatwallTypescript.d.ts' />
 /// <reference path='../../../../client/typings/tsd.d.ts' />
 /*collection service is used to maintain the state of the ui*/
-module slatwalladmin{
-    export class CollectionService extends BaseService{
+module hibachi.services{
+    export class CollectionService extends hibachi.services.BaseService{
         public static $inject = [
             '$filter','$log'
         ];    
@@ -234,7 +234,7 @@ module slatwalladmin{
             return this._orderBy(propertiesList,predicate,reverse);
         }
     }
-    angular.module('slatwalladmin').service('collectionService', CollectionService);    
+    getModule().service('collectionService', CollectionService);    
 }
 		
 		

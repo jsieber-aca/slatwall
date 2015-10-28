@@ -52,7 +52,7 @@ var slatwalladmin;
             };
         }
         return SelectionService;
-    })(slatwalladmin.BaseService);
+    })(hibachi.services.BaseService);
     slatwalladmin.SelectionService = SelectionService;
     angular.module('slatwalladmin').service('selectionService', SelectionService);
 })(slatwalladmin || (slatwalladmin = {}));

@@ -1,13 +1,19 @@
-angular.module('slatwalladmin')
-    .filter('percentage', ['$window', function ($window) {
-        return function (input, decimals, suffix) {
-            decimals = angular.isNumber(decimals) ? decimals : 3;
-            suffix = suffix || '%';
-            if ($window.isNaN(input)) {
-                return '';
-            }
-            return Math.round(input * Math.pow(10, decimals + 2)) / Math.pow(10, decimals) + suffix;
-        };
-    }]);
+var hibachi;
+(function (hibachi) {
+    var filters;
+    (function (filters) {
+        hibachi.getModule()
+            .filter('percentage', ['$window', function ($window) {
+                return function (input, decimals, suffix) {
+                    decimals = angular.isNumber(decimals) ? decimals : 3;
+                    suffix = suffix || '%';
+                    if ($window.isNaN(input)) {
+                        return '';
+                    }
+                    return Math.round(input * Math.pow(10, decimals + 2)) / Math.pow(10, decimals) + suffix;
+                };
+            }]);
+    })(filters = hibachi.filters || (hibachi.filters = {}));
+})(hibachi || (hibachi = {}));
 
 //# sourceMappingURL=../filters/percentage.js.map

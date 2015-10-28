@@ -2,7 +2,7 @@
 /// <reference path='../../../../client/typings/tsd.d.ts' />
 var slatwalladmin;
 (function (slatwalladmin) {
-    class ProductBundleService extends slatwalladmin.BaseService {
+    class ProductBundleService extends hibachi.services.BaseService {
         constructor($log, $slatwall, utilityService) {
             super();
             this.$log = $log;
