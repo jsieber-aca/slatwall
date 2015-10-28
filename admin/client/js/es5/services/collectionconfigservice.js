@@ -1,7 +1,7 @@
 var hibachi;
 (function (hibachi) {
-    var services;
-    (function (services) {
+    var collections;
+    (function (collections) {
         var Column = (function () {
             function Column(propertyIdentifier, title, isVisible, isDeletable, isSearchable, isExportable, persistent, ormtype, attributeID, attributeSetObject) {
                 this.propertyIdentifier = propertyIdentifier;
@@ -48,7 +48,7 @@ var hibachi;
             }
             return Join;
         })();
-        services.Join = Join;
+        collections.Join = Join;
         var OrderBy = (function () {
             function OrderBy(propertyIdentifier, direction) {
                 this.propertyIdentifier = propertyIdentifier;
@@ -198,11 +198,11 @@ var hibachi;
                 this.capitalize = function (s) {
                     return s && s[0].toUpperCase() + s.slice(1);
                 };
-                this.addColumn = function (column) {
-                    if (!_this.columns || _this.utilityService.ArrayFindByPropertyValue(_this.columns, 'propertyIdentifier', column.propertyIdentifier) === -1) {
-                        _this.addColumn(column.propertyIdentifier, column.title, column);
-                    }
-                };
+                // private addColumn=(column:Column)=>{
+                //     if(!this.columns || this.utilityService.ArrayFindByPropertyValue(this.columns,'propertyIdentifier',column.propertyIdentifier) === -1){
+                //         this.addColumn(column.propertyIdentifier,column.title,column);
+                //     }
+                // }
                 this.addColumn = function (column, title, options) {
                     if (title === void 0) { title = ''; }
                     if (options === void 0) { options = {}; }
@@ -427,10 +427,18 @@ var hibachi;
             CollectionConfig.$inject = ['$slatwall', 'utilityService'];
             return CollectionConfig;
         })();
-        services.CollectionConfig = CollectionConfig;
-        hibachi.getModule()
-            .factory('collectionConfigService', ['$slatwall', 'utilityService', function ($slatwall, utilityService) { return new CollectionConfig($slatwall, utilityService); }]);
+        collections.CollectionConfig = CollectionConfig;
+    })(collections = hibachi.collections || (hibachi.collections = {}));
+})(hibachi || (hibachi = {}));
+;
+var hibachi;
+(function (hibachi) {
+    var services;
+    (function (services) {
+        var CollectionConfig = hibachi.collections.CollectionConfig;
+        hibachi.getModule().factory('collectionConfigService', ['$slatwall', 'utilityService', function ($slatwall, utilityService) { return new CollectionConfig($slatwall, utilityService); }]);
     })(services = hibachi.services || (hibachi.services = {}));
 })(hibachi || (hibachi = {}));
+;
 
 //# sourceMappingURL=../services/collectionconfigservice.js.map

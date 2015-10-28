@@ -24,7 +24,6 @@ module hibachi{
     }
     
     module services{
-        import CollectionConfig = hibachi.services.CollectionConfig;
         var appModule = angular.module("hibachi.services", []);
         
         export var getModule: () => ng.IModule = () =>{

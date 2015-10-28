@@ -1,5 +1,4 @@
-module hibachi.services{
-
+module hibachi.collections{
     class Column{
         constructor(
             private propertyIdentifier:string,
@@ -210,11 +209,11 @@ module hibachi.services{
             return s && s[0].toUpperCase() + s.slice(1);
         };
         
-        private addColumn=(column:Column)=>{
-            if(!this.columns || this.utilityService.ArrayFindByPropertyValue(this.columns,'propertyIdentifier',column.propertyIdentifier) === -1){
-                this.addColumn(column.propertyIdentifier,column.title,column);
-            }
-        }
+        // private addColumn=(column:Column)=>{
+        //     if(!this.columns || this.utilityService.ArrayFindByPropertyValue(this.columns,'propertyIdentifier',column.propertyIdentifier) === -1){
+        //         this.addColumn(column.propertyIdentifier,column.title,column);
+        //     }
+        // }
 
         private addColumn= (column: string, title: string = '', options:Object = {}) =>{
             
@@ -381,7 +380,7 @@ module hibachi.services{
             }
             
             var collection = propertyIdentifier;
-           
+            
             //if the propertyIdenfifier is a chain
             var propertyKey = '';
             
@@ -426,7 +425,7 @@ module hibachi.services{
         }
 
         addCollectionFilter= (propertyIdentifier: string, displayPropertyIdentifier:string, displayValue:string,
-                              collectionID: string, criteria:string='One', fieldtype?:string, readOnly:boolean=false
+                                collectionID: string, criteria:string='One', fieldtype?:string, readOnly:boolean=false
         ) =>{
             this.filterGroups[0].filterGroup.push(
                 new CollectionFilter(
@@ -491,8 +490,10 @@ module hibachi.services{
             }
             return this.$slatwall.getEntity(this.baseEntityName, this.getOptions());
         };
-
     }
-    getModule()
-        .factory('collectionConfigService', ['$slatwall','utilityService', ($slatwall: any,utilityService) => new CollectionConfig($slatwall,utilityService)]);
-}
+};
+
+module hibachi.services{ 
+    import CollectionConfig = hibachi.collections.CollectionConfig;
+    getModule().factory('collectionConfigService', ['$slatwall','utilityService', ($slatwall: any,utilityService) => new CollectionConfig($slatwall,utilityService)]);
+};

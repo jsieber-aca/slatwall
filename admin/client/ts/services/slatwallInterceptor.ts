@@ -17,10 +17,10 @@ module slatwalladmin{
 			$q:ng.IQService,
 			$log:ng.ILogService,
 			$injector:ng.auto.IInjectorService,
-			alertService:slatwalladmin.IAlertService,
+			alertService:hibachi.services.IAlertService,
 			baseURL,
-			dialogService:slatwalladmin.IDialogService,
-            utilityService:slatwalladmin.IUtilityService
+			dialogService:hibachi.services.IDialogService,
+            utilityService:hibachi.services.IUtilityService
 		) {
             return new SlatwallInterceptor($location, $window, $q, $log, $injector, alertService,baseURL,dialogService,utilityService);
         }
