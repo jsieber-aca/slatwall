@@ -118,7 +118,7 @@ var slatwalladmin;
     }
     SlatwallInterceptor.$inject = ['$location', '$window', '$q', '$log', '$injector', 'alertService', 'baseURL', 'dialogService', 'utilityService'];
     slatwalladmin.SlatwallInterceptor = SlatwallInterceptor;
-    angular.module('slatwalladmin').service('slatwallInterceptor', SlatwallInterceptor);
+    slatwalladmin.getModule().service('slatwallInterceptor', SlatwallInterceptor);
 })(slatwalladmin || (slatwalladmin = {}));
 
 //# sourceMappingURL=../services/slatwallInterceptor.js.map

@@ -50,6 +50,9 @@ var logger;
             } //<--end handle method
         }
         services.ExceptionHandler = ExceptionHandler; //<--end class
+        //let angular know about our class. notive we pass in the $injector and instantiate the class in one go
+        //again using the fat arrow for scope.
+        logger.getModule().factory('$exceptionHandler', ['$injector', ($injector) => new ExceptionHandler($injector)]);
     })(services = logger.services || (logger.services = {}));
 })(logger || (logger = {})); //<--end module
 

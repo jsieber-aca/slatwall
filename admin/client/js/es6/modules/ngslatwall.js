@@ -1,10 +1,11 @@
 /// <reference path="../../../../client/typings/tsd.d.ts" />
 /// <reference path="../../../../client/typings/slatwallTypeScript.d.ts" />
-(() => {
-    var ngSlatwall = angular.module('ngSlatwall', ['hibachi']);
-})();
 var ngSlatwall;
-(function (ngSlatwall) {
+(function (ngSlatwall_1) {
+    var ngSlatwall = angular.module('ngSlatwall', ['hibachi']);
+    ngSlatwall_1.getModule = () => {
+        return angular.module('ngSlatwall');
+    };
     class SlatwallService {
         constructor($window, $q, $http, $timeout, $log, $rootScope, $location, $anchorScroll, utilityService, formService, _config, _jsEntities, _jsEntityInstances) {
             this.$window = $window;
@@ -525,7 +526,7 @@ var ngSlatwall;
         }
     }
     SlatwallService.$inject = ['$window', '$q', '$http', '$timeout', '$log', '$rootScope', '$location', '$anchorScroll', 'utilityService', 'formService'];
-    ngSlatwall.SlatwallService = SlatwallService;
+    ngSlatwall_1.SlatwallService = SlatwallService;
     class $Slatwall {
         constructor() {
             this._config = {};
@@ -574,8 +575,8 @@ var ngSlatwall;
             return new SlatwallService($window, $q, $http, $timeout, $log, $rootScope, $location, $anchorScroll, utilityService, formService, this.getConfig(), this._jsEntities);
         }
     }
-    ngSlatwall.$Slatwall = $Slatwall;
-    angular.module('ngSlatwall').provider('$slatwall', $Slatwall);
+    ngSlatwall_1.$Slatwall = $Slatwall;
+    ngSlatwall_1.getModule().provider('$slatwall', $Slatwall);
 })(ngSlatwall || (ngSlatwall = {}));
 
 //# sourceMappingURL=../modules/ngslatwall.js.map

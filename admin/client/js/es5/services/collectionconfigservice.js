@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var hibachi;
 (function (hibachi) {
     var collections;
@@ -81,152 +80,9 @@ var hibachi;
                 this.allRecords = allRecords;
                 this.clearFilterGroups = function () {
                     _this.filterGroups = [{ filterGroup: [] }];
-=======
-var slatwalladmin;
-(function (slatwalladmin) {
-    var Column = (function () {
-        function Column(propertyIdentifier, title, isVisible, isDeletable, isSearchable, isExportable, persistent, ormtype, attributeID, attributeSetObject) {
-            this.propertyIdentifier = propertyIdentifier;
-            this.title = title;
-            this.isVisible = isVisible;
-            this.isDeletable = isDeletable;
-            this.isSearchable = isSearchable;
-            this.isExportable = isExportable;
-            this.persistent = persistent;
-            this.ormtype = ormtype;
-            this.attributeID = attributeID;
-            this.attributeSetObject = attributeSetObject;
-        }
-        return Column;
-    })();
-    var Filter = (function () {
-        function Filter(propertyIdentifier, value, comparisonOperator, logicalOperator, displayPropertyIdentifier, displayValue) {
-            this.propertyIdentifier = propertyIdentifier;
-            this.value = value;
-            this.comparisonOperator = comparisonOperator;
-            this.logicalOperator = logicalOperator;
-            this.displayPropertyIdentifier = displayPropertyIdentifier;
-            this.displayValue = displayValue;
-        }
-        return Filter;
-    })();
-    var CollectionFilter = (function () {
-        function CollectionFilter(propertyIdentifier, displayPropertyIdentifier, displayValue, collectionID, criteria, fieldtype, readOnly) {
-            if (readOnly === void 0) { readOnly = false; }
-            this.propertyIdentifier = propertyIdentifier;
-            this.displayPropertyIdentifier = displayPropertyIdentifier;
-            this.displayValue = displayValue;
-            this.collectionID = collectionID;
-            this.criteria = criteria;
-            this.fieldtype = fieldtype;
-            this.readOnly = readOnly;
-        }
-        return CollectionFilter;
-    })();
-    var Join = (function () {
-        function Join(associationName, alias) {
-            this.associationName = associationName;
-            this.alias = alias;
-        }
-        return Join;
-    })();
-    slatwalladmin.Join = Join;
-    var OrderBy = (function () {
-        function OrderBy(propertyIdentifier, direction) {
-            this.propertyIdentifier = propertyIdentifier;
-            this.direction = direction;
-        }
-        return OrderBy;
-    })();
-    var CollectionConfig = (function () {
-        function CollectionConfig($slatwall, utilityService, baseEntityName, baseEntityAlias, columns, filterGroups, joins, orderBy, groupBys, id, currentPage, pageShow, keywords, allRecords) {
-            var _this = this;
-            if (filterGroups === void 0) { filterGroups = [{ filterGroup: [] }]; }
-            if (currentPage === void 0) { currentPage = 1; }
-            if (pageShow === void 0) { pageShow = 10; }
-            if (keywords === void 0) { keywords = ''; }
-            if (allRecords === void 0) { allRecords = false; }
-            this.$slatwall = $slatwall;
-            this.utilityService = utilityService;
-            this.baseEntityName = baseEntityName;
-            this.baseEntityAlias = baseEntityAlias;
-            this.columns = columns;
-            this.filterGroups = filterGroups;
-            this.joins = joins;
-            this.orderBy = orderBy;
-            this.groupBys = groupBys;
-            this.id = id;
-            this.currentPage = currentPage;
-            this.pageShow = pageShow;
-            this.keywords = keywords;
-            this.allRecords = allRecords;
-            this.clearFilterGroups = function () {
-                _this.filterGroups = [{ filterGroup: [] }];
-            };
-            this.newCollectionConfig = function (baseEntityName, baseEntityAlias) {
-                return new CollectionConfig(_this.$slatwall, _this.utilityService, baseEntityName, baseEntityAlias);
-            };
-            this.loadJson = function (jsonCollection) {
-                //if json then make a javascript object else use the javascript object
-                if (angular.isString(jsonCollection)) {
-                    jsonCollection = angular.fromJson(jsonCollection);
-                }
-                _this.baseEntityAlias = jsonCollection.baseEntityAlias;
-                _this.baseEntityName = jsonCollection.baseEntityName;
-                if (angular.isDefined(jsonCollection.filterGroups)) {
-                    _this.filterGroups = jsonCollection.filterGroups;
-                }
-                _this.columns = jsonCollection.columns;
-                _this.joins = jsonCollection.joins;
-                _this.keywords = jsonCollection.keywords;
-                _this.orderBy = jsonCollection.orderBy;
-                _this.groupBys = jsonCollection.groupBys;
-                _this.pageShow = jsonCollection.pageShow;
-                _this.allRecords = jsonCollection.allRecords;
-            };
-            this.loadFilterGroups = function (filterGroupsConfig) {
-                if (filterGroupsConfig === void 0) { filterGroupsConfig = [{ filterGroup: [] }]; }
-                _this.filterGroups = filterGroupsConfig;
-            };
-            this.loadColumns = function (columns) {
-                _this.columns = columns;
-            };
-            this.getCollectionConfig = function () {
-                return {
-                    baseEntityAlias: _this.baseEntityAlias,
-                    baseEntityName: _this.baseEntityName,
-                    columns: _this.columns,
-                    filterGroups: _this.filterGroups,
-                    joins: _this.joins,
-                    groupBys: _this.groupBys,
-                    currentPage: _this.currentPage,
-                    pageShow: _this.pageShow,
-                    keywords: _this.keywords,
-                    defaultColumns: (!_this.columns || !_this.columns.length),
-                    allRecords: _this.allRecords,
->>>>>>> branch 'feature' of ssh://git@github.com/ten24/slatwall.git
                 };
-<<<<<<< HEAD
                 this.newCollectionConfig = function (baseEntityName, baseEntityAlias) {
                     return new CollectionConfig(_this.$slatwall, _this.utilityService, baseEntityName, baseEntityAlias);
-=======
-            };
-            this.getEntityName = function () {
-                return _this.baseEntityName.charAt(0).toUpperCase() + _this.baseEntityName.slice(1);
-            };
-            this.getOptions = function () {
-                var options = {
-                    columnsConfig: angular.toJson(_this.columns),
-                    filterGroupsConfig: angular.toJson(_this.filterGroups),
-                    joinsConfig: angular.toJson(_this.joins),
-                    orderByConfig: angular.toJson(_this.orderBy),
-                    groupBysConfig: angular.toJson(_this.groupBys),
-                    currentPage: _this.currentPage,
-                    pageShow: _this.pageShow,
-                    keywords: _this.keywords,
-                    defaultColumns: (!_this.columns || !_this.columns.length),
-                    allRecords: _this.allRecords
->>>>>>> branch 'feature' of ssh://git@github.com/ten24/slatwall.git
                 };
                 this.loadJson = function (jsonCollection) {
                     //if json then make a javascript object else use the javascript object
@@ -276,6 +132,7 @@ var slatwalladmin;
                         columnsConfig: angular.toJson(_this.columns),
                         filterGroupsConfig: angular.toJson(_this.filterGroups),
                         joinsConfig: angular.toJson(_this.joins),
+                        orderByConfig: angular.toJson(_this.orderBy),
                         groupBysConfig: angular.toJson(_this.groupBys),
                         currentPage: _this.currentPage,
                         pageShow: _this.pageShow,
@@ -332,7 +189,6 @@ var slatwalladmin;
                         _this.joins.push(join);
                     }
                 };
-<<<<<<< HEAD
                 this.addAlias = function (propertyIdentifier) {
                     var parts = propertyIdentifier.split('.');
                     if (parts.length > 1 && parts[0] !== _this.baseEntityAlias) {
@@ -433,136 +289,24 @@ var slatwalladmin;
                         var propertyMetaData = _this.$slatwall.getEntityMetaData(lastEntityName)[_this.utilityService.listLast(propertyIdentifier, '.')];
                         var isOneToMany = angular.isDefined(propertyMetaData['singularname']);
                         //if is a one-to-many propertyKey then add a groupby
-                        if (isOneToMany) {
-                            _this.addGroupBy(alias);
-                        }
+                        //                if(isOneToMany){
+                        //                    this.addGroupBy(alias);
+                        //                }
                         column.propertyIdentifier = _this.buildPropertyIdentifier(alias, propertyIdentifier);
                         var join = new Join(propertyIdentifier, column.propertyIdentifier);
                         doJoin = true;
-=======
-                var isObject = _this.$slatwall.getPropertyIsObjectByEntityNameAndPropertyIdentifier(_this.baseEntityName, propertyIdentifier);
-                if (isObject) {
-                    //check if count is on a one-to-many
-                    var lastEntityName = _this.$slatwall.getLastEntityNameInPropertyIdentifier(_this.baseEntityName, propertyIdentifier);
-                    var propertyMetaData = _this.$slatwall.getEntityMetaData(lastEntityName)[_this.utilityService.listLast(propertyIdentifier, '.')];
-                    var isOneToMany = angular.isDefined(propertyMetaData['singularname']);
-                    //if is a one-to-many propertyKey then add a groupby
-                    //                if(isOneToMany){
-                    //                    this.addGroupBy(alias);
-                    //                }
-                    column.propertyIdentifier = _this.buildPropertyIdentifier(alias, propertyIdentifier);
-                    var join = new Join(propertyIdentifier, column.propertyIdentifier);
-                    doJoin = true;
-                }
-                else {
-                    column.propertyIdentifier = _this.buildPropertyIdentifier(alias, collection) + propertyKey;
-                    var join = new Join(collection, _this.buildPropertyIdentifier(alias, collection));
-                    doJoin = true;
-                }
-                angular.extend(column, options);
-                //Add columns
-                _this.addColumn(column.propertyIdentifier, undefined, column);
-                if (doJoin) {
-                    _this.addJoin(join);
-                }
-            };
-            this.addGroupBy = function (groupByAlias) {
-                if (!_this.groupBys) {
-                    _this.groupBys = '';
-                }
-                _this.groupBys = _this.utilityService.listAppend(_this.groupBys, groupByAlias);
-            };
-            this.addDisplayProperty = function (propertyIdentifier, title, options) {
-                if (title === void 0) { title = ''; }
-                if (options === void 0) { options = {}; }
-                var _DividedColumns = propertyIdentifier.trim().split(',');
-                var _DividedTitles = title.trim().split(',');
-                _DividedColumns.forEach(function (column, index) {
-                    column = column.trim();
-                    //this.addJoin(column);
-                    if (!angular.isUndefined(_DividedTitles[index]) && _DividedTitles[index].trim() != '') {
-                        title = _DividedTitles[index].trim();
->>>>>>> branch 'feature' of ssh://git@github.com/ten24/slatwall.git
                     }
                     else {
                         column.propertyIdentifier = _this.buildPropertyIdentifier(alias, collection) + propertyKey;
                         var join = new Join(collection, _this.buildPropertyIdentifier(alias, collection));
                         doJoin = true;
                     }
-<<<<<<< HEAD
                     angular.extend(column, options);
                     //Add columns
                     _this.addColumn(column.propertyIdentifier, undefined, column);
                     if (doJoin) {
                         _this.addJoin(join);
                     }
-=======
-                    _this.addColumn(_this.formatCollectionName(column), title, options);
-                });
-            };
-            this.addFilter = function (propertyIdentifier, value, comparisonOperator, logicalOperator) {
-                if (comparisonOperator === void 0) { comparisonOperator = '='; }
-                var alias = _this.baseEntityAlias;
-                var join;
-                var doJoin = false;
-                //if filterGroups does not exists then set a default
-                if (!_this.filterGroups) {
-                    _this.filterGroups = [{ filterGroup: [] }];
-                }
-                var collection = propertyIdentifier;
-                //if the propertyIdenfifier is a chain
-                var propertyKey = '';
-                if (propertyIdentifier.indexOf('.') !== -1) {
-                    collection = _this.utilityService.mid(propertyIdentifier, 0, propertyIdentifier.lastIndexOf('.'));
-                    propertyKey = '.' + _this.utilityService.listLast(propertyIdentifier, '.');
-                }
-                //create filter group
-                var filter = new Filter(_this.formatCollectionName(propertyIdentifier), value, comparisonOperator, logicalOperator, propertyIdentifier.split('.').pop(), value);
-                var isObject = _this.$slatwall.getPropertyIsObjectByEntityNameAndPropertyIdentifier(_this.baseEntityName, propertyIdentifier);
-                if (isObject) {
-                    filter.propertyIdentifier = _this.buildPropertyIdentifier(alias, propertyIdentifier);
-                    join = new Join(propertyIdentifier, _this.buildPropertyIdentifier(alias, propertyIdentifier));
-                    doJoin = true;
-                }
-                else if (propertyKey !== '') {
-                    filter.propertyIdentifier = _this.buildPropertyIdentifier(alias, collection) + propertyKey;
-                    join = new Join(collection, _this.buildPropertyIdentifier(alias, collection));
-                    doJoin = true;
-                }
-                //if filterGroups is longer than 0 then we at least need to default the logical Operator to AND
-                if (_this.filterGroups[0].filterGroup.length && !logicalOperator)
-                    logicalOperator = 'AND';
-                _this.filterGroups[0].filterGroup.push(filter);
-                if (doJoin) {
-                    _this.addJoin(join);
-                }
-            };
-            this.buildPropertyIdentifier = function (alias, propertyIdentifier, joinChar) {
-                if (joinChar === void 0) { joinChar = '_'; }
-                return alias + joinChar + _this.utilityService.replaceAll(propertyIdentifier, '.', '_');
-            };
-            this.addCollectionFilter = function (propertyIdentifier, displayPropertyIdentifier, displayValue, collectionID, criteria, fieldtype, readOnly) {
-                if (criteria === void 0) { criteria = 'One'; }
-                if (readOnly === void 0) { readOnly = false; }
-                _this.filterGroups[0].filterGroup.push(new CollectionFilter(_this.formatCollectionName(propertyIdentifier), displayPropertyIdentifier, displayValue, collectionID, criteria, fieldtype, readOnly));
-            };
-            //orderByList in this form: "property|direction" concrete: "skuName|ASC"
-            this.setOrderBy = function (orderByList) {
-                var orderBys = orderByList.split(',');
-                angular.forEach(orderBys, function (orderBy) {
-                    _this.addOrderBy(orderBy);
-                });
-            };
-            this.addOrderBy = function (orderByString) {
-                if (!_this.orderBy) {
-                    _this.orderBy = [];
-                }
-                var propertyIdentifier = _this.utilityService.listFirst(orderByString, '|');
-                var direction = _this.utilityService.listLast(orderByString, '|');
-                var orderBy = {
-                    propertyIdentifier: _this.formatCollectionName(propertyIdentifier),
-                    direction: direction
->>>>>>> branch 'feature' of ssh://git@github.com/ten24/slatwall.git
                 };
                 this.addGroupBy = function (groupByAlias) {
                     if (!_this.groupBys) {
@@ -636,9 +380,9 @@ var slatwalladmin;
                 //orderByList in this form: "property|direction" concrete: "skuName|ASC"
                 this.setOrderBy = function (orderByList) {
                     var orderBys = orderByList.split(',');
-                    for (var orderBy in orderBys) {
+                    angular.forEach(orderBys, function (orderBy) {
                         _this.addOrderBy(orderBy);
-                    }
+                    });
                 };
                 this.addOrderBy = function (orderByString) {
                     if (!_this.orderBy) {
@@ -647,7 +391,7 @@ var slatwalladmin;
                     var propertyIdentifier = _this.utilityService.listFirst(orderByString, '|');
                     var direction = _this.utilityService.listLast(orderByString, '|');
                     var orderBy = {
-                        propertyIdentifier: propertyIdentifier,
+                        propertyIdentifier: _this.formatCollectionName(propertyIdentifier),
                         direction: direction
                     };
                     _this.orderBy.push(orderBy);

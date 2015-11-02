@@ -101,7 +101,7 @@ var hibachi;
         }
         ObserverService.$inject = ['utilityService'];
         services.ObserverService = ObserverService;
-        services.getModule().service('observerService', ObserverService);
+        hibachi.getModule().service('observerService', ObserverService);
     })(services = hibachi.services || (hibachi.services = {}));
 })(hibachi || (hibachi = {}));
 

@@ -1,14 +1,17 @@
 /// <reference path='../../../../client/typings/slatwallTypescript.d.ts' />
 /// <reference path='../../../../client/typings/tsd.d.ts' />
-var slatwalladmin;
-(function (slatwalladmin) {
-    //model
-    class PageDialog {
-        constructor(path) {
-            this.path = partialFileName;
+var hibachi;
+(function (hibachi) {
+    var model;
+    (function (model) {
+        //model
+        class PageDialog {
+            constructor(path) {
+                this.path = partialFileName;
+            }
         }
-    }
-    slatwalladmin.PageDialog = PageDialog;
-})(slatwalladmin || (slatwalladmin = {}));
+        model.PageDialog = PageDialog;
+    })(model = hibachi.model || (hibachi.model = {}));
+})(hibachi || (hibachi = {}));
 
 //# sourceMappingURL=../model/pagedialog.js.map

@@ -127,7 +127,7 @@ var slatwalladmin;
     }
     OrderItemGiftRecipientControl.$inject = ["$scope", "$slatwall"];
     slatwalladmin.OrderItemGiftRecipientControl = OrderItemGiftRecipientControl;
-    angular.module('slatwalladmin').controller('preprocessorderitem_addorderitemgiftrecipient', OrderItemGiftRecipientControl);
+    slatwalladmin.getModule().controller('preprocessorderitem_addorderitemgiftrecipient', OrderItemGiftRecipientControl);
 })(slatwalladmin || (slatwalladmin = {}));
 
 //# sourceMappingURL=../controllers/preprocessorderitem_addorderitemgiftrecipient.js.map

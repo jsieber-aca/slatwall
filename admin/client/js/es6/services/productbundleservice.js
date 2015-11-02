@@ -78,7 +78,7 @@ var slatwalladmin;
         '$log', '$slatwall', 'utilityService'
     ];
     slatwalladmin.ProductBundleService = ProductBundleService;
-    angular.module('slatwalladmin').service('productBundleService', ProductBundleService);
+    slatwalladmin.getModule().service('productBundleService', ProductBundleService);
 })(slatwalladmin || (slatwalladmin = {}));
 
 //# sourceMappingURL=../services/productbundleservice.js.map
