@@ -59,6 +59,9 @@ component displayname="Integration" entityname="SlatwallIntegration" table="SwIn
 	// Related Object Properties (one-to-many)
 	property name="apps" type="array" cfc="App" singularname="app" fieldtype="one-to-many" fkcolumn="integrationID" inverse="true";
 	
+	// Related Object Properties (many-to-many - inverse)
+    property name="sites" singularname="site" cfc="Site" type="array" fieldtype="many-to-many" linktable="SwSiteIntegration" fkcolumn="integrationID" inversejoincolumn="siteID" inverse="true" lazy="extra";
+	
 	// Audit Properties
 	property name="createdDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="createdByAccountID" hb_populateEnabled="false" ormtype="string";
@@ -130,7 +133,26 @@ component displayname="Integration" entityname="SlatwallIntegration" table="SwIn
 	// ============  END:  Non-Persistent Property Methods =================
 	
 	// ============= START: Bidirectional Helper Methods ===================
-	
+    // Site (many-To-many - inverse)
+    public void function addSite(required site){
+        if (!hasSite(arguments.site)) {
+            arrayAppend(variables.sites, arguments.site);
+            arrayAppend(arguments.site.getIntegrations(), this);
+        }
+    }
+
+    public void function removeSite(required site){
+        if (hasSite(arguments.site)) {
+            var index = arrayFind(variables.sites, arguments.site);
+            if (index > 0) {
+                arrayDeleteAt(variables.sites, index);
+            }
+            index = arrayFind(arguments.site.getIntegrations(), this);
+            if (index > 0) {
+                arrayDeleteAt(arguments.site.getIntegrations(), index);
+            }
+        }
+    }
 	// =============  END:  Bidirectional Helper Methods ===================
 	
 	// ================== START: Overridden Methods ========================

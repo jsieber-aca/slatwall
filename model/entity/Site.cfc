@@ -64,6 +64,7 @@ component entityname="SlatwallSite" table="SwSite" persistent="true" accessors="
 	property name="contents" singularname="content" cfc="Content" type="array" fieldtype="one-to-many" cascade="all-delete-orphan" fkcolumn="siteID" inverse="true" lazy="extra";
 	
 	// Related Object Properties (many-to-many - owner)
+    property name="integrations" singularname="integration" cfc="Integration" fieldtype="many-to-many" linktable="SwSiteIntegration" fkcolumn="siteID" inversejoincolumn="integrationID";
 
 	// Related Object Properties (many-to-many - inverse)
 	
@@ -148,6 +149,15 @@ component entityname="SlatwallSite" table="SwSite" persistent="true" accessors="
 	public void function removeContent(required any content) {
 		arguments.content.removeSite( this );
 	}
+	
+	// Integration (many-To-many - owner)
+	public void function addIntegration(required integration) {
+        arguments.integration.addSite(this);
+    }
+
+    public void function removeIntegration(required integration){
+        arguments.integration.removeSite(this);
+    }
 	
 	// =============  END:  Bidirectional Helper Methods ===================
 
