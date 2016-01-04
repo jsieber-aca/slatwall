@@ -1,7 +1,5 @@
 sudo: required
 
-language: node_js
-
 services:
   - docker
 
@@ -15,5 +13,5 @@ before_install:
 
 script:
   - docker-compose -f meta/docker/slatwall-ci/docker-compose.yml build
-  - cd org/Hibachi/client
-  - npm install
+  - docker-compose up -d
+  - docker exec slatwallweb ant "-Dsource=remote -Dwork.dir=$HOME/work -Dbuild.dir=$TRAVIS_BUILD_DIR/meta/ci runUnitTests" 
