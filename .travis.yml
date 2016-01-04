@@ -13,5 +13,5 @@ before_install:
 
 script:
   - docker-compose -f meta/docker/slatwall-ci/docker-compose.yml build
-  - docker-compose up -d
-  - docker exec slatwallweb ant "-Dsource=remote -Dwork.dir=$HOME/work -Dbuild.dir=$TRAVIS_BUILD_DIR/meta/ci runUnitTests" 
+  - docker-compose -f meta/docker/slatwall-ci/docker-compose.yml up -d
+  - docker-compose -f meta/docker/slatwall-ci/docker-compose.yml run slatwallweb ant "-Dsource=remote -Dwork.dir=$HOME/work -Dbuild.dir=$TRAVIS_BUILD_DIR/meta/ci runUnitTests" 
