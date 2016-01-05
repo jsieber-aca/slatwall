@@ -14,7 +14,6 @@ before_install:
 script:
  - docker-compose -f meta/docker/slatwall-ci/docker-compose.yml build
  - docker-compose -f meta/docker/slatwall-ci/docker-compose.yml up -d
- 
  - docker-compose -f meta/docker/slatwall-ci/docker-compose.yml run slatwallweb npm install /var/www/org/Hibachi/client
  - docker-compose -f meta/docker/slatwall-ci/docker-compose.yml run slatwallweb gulp --gulpfile /var/www/org/Hibachi/client/gulpfile.js
  - docker-compose -f meta/docker/slatwall-ci/docker-compose.yml run slatwallweb ant -f $TRAVIS_BUILD_DIR/meta/ci/build.xml runUnitTests

@@ -3,6 +3,7 @@ FROM lucee/lucee-tomcat:latest
 MAINTAINER Greg Moser, greg.moser@ten24web.com
 
 RUN apt-get update && apt-get install -y uuid-runtime ant nodejs npm
+RUN ln -s /usr/bin/nodejs /usr/bin/node
 RUN npm install -g gulp
 
 COPY lucee-server.xml /opt/lucee/server/lucee-server/context/lucee-server.xml
